@@ -12,6 +12,14 @@
 
 ## Funcionalidades
 
+### Clientes
+
+- [X] Cadastrar novo cliente.
+- [X] Atualizar informações do cliente.
+- [X] Página de detalhes do cliente.
+- [X] Deletar cliente.
+- [X] Listagem de clientes.
+
 Em desenvolvimento :warning:
 
 ## Como rodar a aplicação
@@ -61,10 +69,20 @@ Gere a key do projeto Laravel:
 sail artisan key:generate
 ```
 
-Execute as migrations:
+Execute as migrations e popule a aplicação:
 
 ```
-sail artisan migrate
+sail artisan migrate --seed
 ```
 
-* Acesse http://localhost
+Inicie o servidor de desenvolvimento:
+
+```
+npm run dev
+```
+
+* Acesse http://localhost e faça login com o usuário já cadastrado no sistema:
+
+| E-mail | Senha |
+| :----- | :----- |
+| mariner4_gestao@yahbanking.com | password |
