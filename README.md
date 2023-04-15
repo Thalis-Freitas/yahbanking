@@ -4,6 +4,7 @@
   * [Descrição do projeto](#descrição-do-projeto)
   * [Funcionalidades](#funcionalidades)
   * [Como rodar a aplicação](#como-rodar-a-aplicação)
+  * [Comando para rodar os testes](#comando-para-rodar-os-testes)
 
 ## Descrição do projeto
 
@@ -75,7 +76,19 @@ Execute as migrations e popule a aplicação:
 sail artisan migrate --seed
 ```
 
-Inicie o servidor de desenvolvimento:
+Acesse o shell do container do projeto:
+
+```
+sail shell
+```
+
+Instale as dependências de compilação:
+
+```
+npm install
+```
+
+Compile o projeto:
 
 ```
 npm run dev
@@ -86,3 +99,9 @@ npm run dev
 | E-mail | Senha |
 | :----- | :----- |
 | mariner4_gestao@yahbanking.com | password |
+
+## Comando para rodar os testes:
+
+```
+sail artisan test
+```
