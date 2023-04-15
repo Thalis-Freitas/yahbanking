@@ -52,7 +52,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
-                                            class="w-full sm:w-auto px-4 py-1.5 me-2 shadow text-red-700 font-bold
+                                            class="w-full sm:w-auto px-4 py-2 me-2 shadow text-red-700 font-bold
                                                 rounded hover:bg-red-600 hover:text-white transition
                                                 ease-in-out duration-800">
                                         Deletar

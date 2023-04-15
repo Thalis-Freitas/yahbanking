@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Requests;
+use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ClientStoreRequest extends FormRequest
+class ClientUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +25,13 @@ class ClientStoreRequest extends FormRequest
         return [
             'name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:clients',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('clients')->ignore(Client::find($this->route('client'))->id),
+            ],
             'avatar' => 'file|mimes:jpeg,jpg,png'
         ];
-
     }
 
     public function messages()
