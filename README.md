@@ -84,7 +84,7 @@ Execute as migrations e popule a aplicação:
 sail artisan migrate --seed
 ```
 
-Crie um link simbólico para que os arquivos armazenados possam ser acessados publicamente através de URLs:
+Crie um link simbólico para que os arquivos armazenados possam ser acessados publicamente:
 
 ```
 sail artisan storage:link

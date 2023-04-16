@@ -46,8 +46,13 @@ class ClientController extends Controller
     public function update(ClientUpdateRequest $request, $id)
     {
         $input = $request->all();
+        if(array_key_exists('avatar', $input)){
+            $input['avatar'] = $input['avatar']->store('avatars', 'public');
+        };
         $client = Client::find($id);
+
         $client->update($input);
+
         return redirect()->route('clients.show', $id)
             ->with('msg', 'Dados atualizados com sucesso!');
     }
