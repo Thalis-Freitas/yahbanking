@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-5">
             @if($errors->any())
             <div class="bg-red-700 text-white p-4 rounded font-bold mb-10">
                 Não foi possível atualizar o cadastro.

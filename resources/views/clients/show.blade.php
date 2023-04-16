@@ -5,15 +5,11 @@
                 Informações sobre: {{ $client->getFullName() }}
             </h2>
             @if ($client->avatar)
-                <td class="px-2 py-4">
-                    <img class="rounded-full w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
-                        src="{{ $client->getAvatarUrl() }}">
-                </td>
+                <img class="rounded-full w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
+                    src="{{ $client->getAvatarUrl() }}">
             @else
-                <td class="px-2 py-4">
-                    <img class="w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
-                        src="/img/avatardefault.svg">
-                </td>
+                <img class="w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
+                    src="/img/avatardefault.svg">
             @endif
         </div>
     </x-slot>
@@ -26,10 +22,16 @@
             </div>
             @endif
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <p class="w-full rounded px-2 py-4 bg-gray-900">Nome: {{ $client->name }}</p>
-                    <p class="mt-5 w-full rounded px-2 py-4 bg-gray-900">Sobrenome: {{ $client->last_name }}</p>
-                    <p class="mt-5 w-full rounded px-2 py-4 bg-gray-900">Email: {{ $client->email }}</p>
+                <div class="p-6 text-gray-900 font-bold">
+                    <p class="w-full p-4 bg-white font-bold rounded-t-lg">
+                        Nome: <span class="font-medium">{{ $client->name }} </span>
+                    </p>
+                    <p class="w-full mt-2 p-4 bg-white font-bold">
+                        Sobrenome: <span class="font-medium">{{ $client->last_name }} </span>
+                    </p>
+                    <p class="w-full mt-2 p-4 bg-white font-bold rounded-b-lg">
+                        Email: <span class="font-medium">{{ $client->email }} </span>
+                    </p>
                 </div>
             </div>
         </div>

@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
+        <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Gerenciamento de Clientes') }}
             </h2>
             <a href="{{route('clients.create')}}"
-            class="px-4 py-2 shadow text-white font-bold
+            class="px-4 py-2 shadow text-white font-bold text-center
                    bg-green-700 hover:bg-green-900 rounded
                    transition ease-in-out duration-500">
                 Novo Cliente
@@ -20,66 +20,62 @@
                 {{ session('msg') }}
             </div>
             @endif
+            @if ($clients->isNotEmpty())
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <table class="w-full bg-white rounded shadow p-4">
-                    <thead>
-                        <tr>
-                            <th class="px-2 py-4 text-left"></th>
-                            <th class="px-2 py-4 text-left">Nome completo</th>
-                            <th class="px-2 py-4 text-left">E-mail</th>
-                            <th class="px-2 py-4 text-left">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($clients as $client)
-                        <tr>
-                            @if ($client->avatar)
-                                <td class="px-2 py-4">
-                                    <img class="rounded-full w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
-                                         src="{{ $client->getAvatarUrl() }}">
-                                </td>
-                            @else
-                                <td class="px-2 py-4">
-                                    <img class="w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4 rounded">
+                    @foreach ($clients as $client)
+                        <div class="bg-white rounded p-4 m-4">
+                            <div class="flex items-center">
+                                @if ($client->avatar)
+                                    <img class="rounded-full w-16" alt="{{ $client->name . 'avatar' }}"
+                                        src="{{ $client->getAvatarUrl() }}">
+                                @else
+                                    <img class="w-16" alt="{{ $client->name . 'avatar' }}"
                                     src="/img/avatardefault.svg">
-                                </td>
-                            @endif
-                            <td class="px-2 py-4">{{ $client->getFullName() }}</td>
-                            <td class="px-2 py-4 break-all">{{ $client->email }}</td>
-                            <td class="px-2 py-4 flex flex-col sm:flex-row">
+                                @endif
+                                <div>
+                                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-700 ml-2">
+                                        {{ $client->getFullName() }}
+                                    </h2>
+                                    <span class="mt-4 text-justify ps-2 text-gray-600">
+                                        {{ $client->email }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:relative sm:w-28 sm:flex-row
+                                        sm:justify-items-start">
+                                <a href="{{ route('clients.show', $client->id) }}"
+                                    class="px-4 py-2 mt-2 text-center shadow text-white font-bold
+                                        bg-emerald-700 hover:bg-emerald-900 rounded
+                                        transition ease-in-out duration-500 sm:me-2">
+                                    Investimento
+                                </a>
+                                <a href="{{ route('clients.edit', $client->id) }}"
+                                    class="px-4 py-2 mt-2 text-center shadow text-white font-bold
+                                        bg-blue-700 hover:bg-blue-900 rounded
+                                        transition ease-in-out duration-500 sm:me-2">
+                                    Editar
+                                </a>
                                 <form class="inline" method="POST"
                                     action="{{ route('clients.destroy', $client->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
-                                            class="w-full sm:w-auto px-4 py-2 me-2 shadow text-red-700 font-bold
-                                                rounded hover:bg-red-600 hover:text-white transition
-                                                ease-in-out duration-800">
+                                    <button type="submit" class="w-full px-4 py-2 shadow font-bold mt-2 text-center
+                                        rounded bg-red-600 hover:bg-red-800 text-white transition ease-in-out duration-500"
+                                        onclick="return confirm('Tem certeza que deseja excluir este cliento?')">
                                         Deletar
                                     </button>
                                 </form>
-                                <a href="{{ route('clients.edit', $client->id) }}"
-                                    class="w-full sm:w-auto px-4 py-2 me-2 shadow text-white font-bold
-                                           bg-blue-700 hover:bg-blue-900 rounded
-                                           transition ease-in-out duration-500">
-                                     Editar
-                                 </a>
-                                <a href="{{ route('clients.show', $client->id) }}"
-                                   class="w-full sm:w-auto px-4 py-2 shadow text-white font-bold
-                                          bg-emerald-700 hover:bg-emerald-900 rounded
-                                          transition ease-in-out duration-500">
-                                    Investimento
-                                </a>
-                            </td>
-                        </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4">Nenhum cliente encontrado!</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
+            @else
+            <div class="p-4 text-bold bg-amber-500 text-white font-bold rounded">
+                Nenhum cliente encontrado!
+            </div>
+            @endif
             <div class="mt-4">
                 {{ $clients->links() }}
             </div>
