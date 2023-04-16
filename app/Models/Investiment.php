@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Investiment extends Model
 {
@@ -17,6 +18,6 @@ class Investiment extends Model
 
     public function getAbbreviationUpper()
     {
-        return strtoupper($this->abbreviation);
+        return Str::upper($this->abbreviation);
     }
 }
