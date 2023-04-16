@@ -21,6 +21,14 @@
 - [X] Deletar cliente.
 - [X] Listagem de clientes.
 
+### Investimentos
+
+- [X] Cadastrar investimento.
+- [X] Atualizar informações do investimento.
+- [X] Página de detalhes do investimento.
+- [X] Deletar investimento.
+- [X] Listagem de investimentos.
+
 Em desenvolvimento :warning:
 
 ## Como rodar a aplicação
@@ -64,7 +72,7 @@ Certifique-se de que o Docker esteja em execução em sua máquina e suba os con
 sail up -d
 ```
 
-Gere a key do projeto Laravel:
+Gere a key do projeto:
 
 ```
 sail artisan key:generate
@@ -74,6 +82,12 @@ Execute as migrations e popule a aplicação:
 
 ```
 sail artisan migrate --seed
+```
+
+Crie um link simbólico para que os arquivos armazenados possam ser acessados publicamente:
+
+```
+sail artisan storage:link
 ```
 
 Acesse o shell do container do projeto:

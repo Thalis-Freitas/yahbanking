@@ -20,7 +20,8 @@ class ClientUpdateTest extends TestCase
         $response = $this->actingAs($user)->patch(route('clients.update', $client->id), [
             'name' => $client->name,
             'last_name' => $client->last_name,
-            'email' => 'novo@email.com'
+            'email' => 'novo@email.com',
+            'avatar' => UploadedFile::fake()->create('avatar.png', 120)
         ]);
 
         $client->refresh();

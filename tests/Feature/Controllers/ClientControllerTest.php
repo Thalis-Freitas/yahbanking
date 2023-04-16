@@ -6,18 +6,16 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class ClientsControllerTest extends TestCase
+class ClientControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_index_method_returns_view_with_paginated_clients()
     {
         $user = User::factory()->create();
-        Auth::login($user);
         Client::factory()->count(15)->create();
 
         $response = $this->actingAs($user)->get(route('clients.index'));
@@ -33,7 +31,6 @@ class ClientsControllerTest extends TestCase
     public function test_create_method_returns_view()
     {
         $user = User::factory()->create();
-        Auth::login($user);
 
         $response = $this->actingAs($user)->get(route('clients.create'));
         $response->assertViewIs('clients.create');
@@ -44,7 +41,6 @@ class ClientsControllerTest extends TestCase
     public function test_store_method_creates_a_new_client()
     {
         $user = User::factory()->create();
-        Auth::login($user);
         Storage::fake('public');
         $file = UploadedFile::fake()->image('avatar.jpg');
         $clientData = Client::factory()->makeOne()->toArray();
@@ -66,7 +62,6 @@ class ClientsControllerTest extends TestCase
     public function test_show_method_returns_view_with_client_data()
     {
         $user = User::factory()->create();
-        Auth::login($user);
         $client = Client::factory()->create();
 
         $response = $this->actingAs($user)->get(route('clients.show', $client->id));
@@ -83,7 +78,6 @@ class ClientsControllerTest extends TestCase
     public function test_edit_method_returns_view_with_client_data()
     {
         $user = User::factory()->create();
-        Auth::login($user);
         $client = Client::factory()->create();
 
         $response = $this->actingAs($user)->get(route('clients.edit', $client->id));
@@ -99,13 +93,26 @@ class ClientsControllerTest extends TestCase
         $user = User::factory()->create();
         $client = Client::factory()->create();
         $newData = Client::factory()->makeOne()->toArray();
-    
+
         $response = $this->actingAs($user)->patch(route('clients.update', $client->id), $newData);
-    
+
         $response->assertRedirect(route('clients.show', $client->id));
         $response->assertSessionHas('msg', 'Dados atualizados com sucesso!');
         $client->refresh();
         $this->assertEquals($newData['name'], $client->name);
         $this->assertEquals($newData['email'], $client->email);
     }
-}    
+
+    public function test_destroy_method_removes_client_and_redirects_to_list()
+    {
+        $user = User::factory()->create();
+        $client = Client::factory()->create();
+
+        $response = $this->actingAs($user)->delete(route('clients.destroy', $client->id));
+
+        $this->assertDatabaseMissing('clients', ['id' => $client->id]);
+        $response->assertRedirect('/clients');
+        $this->assertEquals('Cliente removido com sucesso!', session('msg'));
+    }
+
+}

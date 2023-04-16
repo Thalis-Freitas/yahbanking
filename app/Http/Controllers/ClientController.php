@@ -6,7 +6,7 @@ use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Models\Client;
 
-class ClientsController extends Controller
+class ClientController extends Controller
 {
     public function index()
     {
@@ -46,8 +46,13 @@ class ClientsController extends Controller
     public function update(ClientUpdateRequest $request, $id)
     {
         $input = $request->all();
+        if(array_key_exists('avatar', $input)){
+            $input['avatar'] = $input['avatar']->store('avatars', 'public');
+        };
         $client = Client::find($id);
+
         $client->update($input);
+
         return redirect()->route('clients.show', $id)
             ->with('msg', 'Dados atualizados com sucesso!');
     }
