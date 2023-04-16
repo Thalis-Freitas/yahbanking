@@ -1,8 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Atualizar Informações do Cliente:') }} {{ $client->getFullName() }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight break-word">
+                Atualizar Informações do Cliente: {{ $client->getFullName() }}
+            </h2>
+            @if ($client->avatar)
+                <img class="rounded-full w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
+                    src="{{ $client->getAvatarUrl() }}">
+            @else
+                <img class="w-16 sm:w-12 md:w-16" alt="{{ $client->name . 'avatar' }}"
+                    src="/img/avatardefault.svg">
+            @endif
+        </div>
     </x-slot>
 
     <div class="py-12">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex flex-col sm:flex-row justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-200 leading-tight mb-4">
                 {{ __('Gerenciamento de Clientes') }}
             </h2>
             <a href="{{route('clients.create')}}"
@@ -21,8 +21,8 @@
             </div>
             @endif
             @if ($clients->isNotEmpty())
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4 rounded">
+            <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4 rounded">
                     @foreach ($clients as $client)
                         <div class="bg-white rounded p-4 m-4">
                             <div class="flex items-center">
@@ -34,10 +34,10 @@
                                     src="/img/avatardefault.svg">
                                 @endif
                                 <div>
-                                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-700 ml-2">
+                                    <h2 class="text-2xl font-bold text-gray-700 ml-2 break-word text-justify">
                                         {{ $client->getFullName() }}
                                     </h2>
-                                    <span class="mt-4 text-justify ps-2 text-gray-600">
+                                    <span class="mt-4 text-justify text-gray-600 break-all text-justify">
                                         {{ $client->email }}
                                     </span>
                                 </div>

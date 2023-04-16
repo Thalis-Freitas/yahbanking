@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight break-word">
                 Informações sobre: {{ $client->getFullName() }}
             </h2>
             @if ($client->avatar)
@@ -29,7 +29,7 @@
                     <p class="w-full mt-2 p-4 bg-white font-bold">
                         Sobrenome: <span class="font-medium">{{ $client->last_name }} </span>
                     </p>
-                    <p class="w-full mt-2 p-4 bg-white font-bold rounded-b-lg">
+                    <p class="w-full mt-2 p-4 bg-white font-bold rounded-b-lg break-all">
                         Email: <span class="font-medium">{{ $client->email }} </span>
                     </p>
                 </div>
