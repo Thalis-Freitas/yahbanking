@@ -6,7 +6,7 @@ use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Models\Client;
 
-class ClientsController extends Controller
+class ClientController extends Controller
 {
     public function index()
     {
