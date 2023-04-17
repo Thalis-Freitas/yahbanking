@@ -34,9 +34,14 @@ class Client extends Model
     protected static function booted(): void
     {
         static::created(function (Client $client) {
-            $client->total_value = 0;
             $client->uninvested_value = 0;
             $client->invested_value = 0;
         });
+    }
+
+    public function getTotalValueAttribute()
+    {
+        $totalValue = $this->invested_value + $this->uninvested_value;
+        return number_format($totalValue, 2);
     }
 }

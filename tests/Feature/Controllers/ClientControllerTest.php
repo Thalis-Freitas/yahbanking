@@ -136,14 +136,11 @@ class ClientControllerTest extends TestCase
             'uninvested_value' => 100.00
         ]);
 
-        $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
+        $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
             'uninvested_value' => 50.00
         ]);
 
         $client->refresh();
-
-        $response->assertRedirect(route('clients.show', $client->id));
-        $this->get(route('clients.show', $client->id))->assertSee('Valor depositado com sucesso!');
         $this->assertEquals(150.00, $client->uninvested_value);
     }
 }

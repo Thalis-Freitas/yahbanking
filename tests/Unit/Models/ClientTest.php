@@ -45,9 +45,18 @@ class ClientTest extends TestCase
     {
         $client = Client::factory()->create();
 
-        $this->assertSame(0, $client->total_value);
         $this->assertSame(0, $client->uninvested_value);
         $this->assertSame(0, $client->invested_value);
     }
 
+    public function test_total_value_is_sum_invested_value_and_uninvested_value()
+    {
+        $client = Client::factory()->create([
+            'invested_value' => 2000,
+            'uninvested_value' => 500
+        ]);
+
+        $client->refresh();
+        $this->assertSame('2,500.00', $client->totalValue);
+    }
 }
