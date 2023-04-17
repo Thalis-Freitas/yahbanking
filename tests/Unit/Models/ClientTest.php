@@ -41,4 +41,13 @@ class ClientTest extends TestCase
         $this->assertEquals(Storage::url($path), $client->getAvatarUrl());
     }
 
+    public function test_default_values()
+    {
+        $client = Client::factory()->create();
+
+        $this->assertSame(0, $client->total_value);
+        $this->assertSame(0, $client->uninvested_value);
+        $this->assertSame(0, $client->invested_value);
+    }
+
 }

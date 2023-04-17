@@ -53,7 +53,8 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="w-full px-4 py-2 shadow font-bold mt-2 text-center
-                                        rounded bg-red-600 hover:bg-red-800 text-white transition ease-in-out duration-500"
+                                        rounded bg-gray-300 text-red-700 hover:bg-red-600 hover:text-white
+                                        transition ease-in-out duration-500"
                                         onclick="return confirm('Tem certeza que deseja excluir este investimento? Todos os valores aplicados serão devolvidos.')">
                                         Encerrar
                                     </button>
@@ -63,7 +64,7 @@
                     @endforeach
                 </div>
             @else
-                <div class="p-4 text-bold bg-amber-500 text-white font-bold rounded">
+                <div class="p-4 font-bold bg-amber-500 text-white font-bold rounded">
                     Nenhum investimento encontrado!
                 </div>
             @endif
