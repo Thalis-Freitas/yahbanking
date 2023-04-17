@@ -44,13 +44,13 @@
                             </div>
                             <div class="p-4 my-4 rounded bg-gray-300 font-bold text-gray-800 sm:flex sm:justify-around">
                                 <div>
-                                    <p>Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span></p>
+                                    Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span>
                                 </div>
                                 <div>
-                                    <p>Valor não investido: <span class="text-red-700"> R${{ $client->uninvested_value }}</span></p>
+                                    Valor não investido: <span class="text-red-700"> R${{ $client->uninvested_value }}</span>
                                 </div>
                                 <div>
-                                    <p>Valor investido: <span class="text-green-700"> R${{ $client->invested_value }}</span></p>
+                                    Valor investido: <span class="text-green-700"> R${{ $client->invested_value }}</span>
                                 </div>
                             </div>
                             <div class="flex flex-col sm:w-full sm:flex-row
@@ -72,7 +72,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="w-full px-4 py-2 shadow font-bold mt-2 text-center
-                                        rounded rounded bg-gray-300 text-red-700 hover:bg-red-600 hover:text-white
+                                        rounded bg-gray-300 text-red-700 hover:bg-red-600 hover:text-white
                                         transition ease-in-out duration-500"
                                         onclick="return confirm('Tem certeza que deseja excluir este cliente?')">
                                         Deletar
