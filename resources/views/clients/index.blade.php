@@ -25,21 +25,21 @@
                 <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4 rounded">
                     @foreach ($clients as $client)
                         <div class="bg-white rounded p-4 m-4">
-                            <div class="flex items-center">
+                            <div class="flex">
                                 @if ($client->avatar)
-                                    <img class="rounded-full w-16" alt="{{ $client->name . 'avatar' }}"
+                                    <img class="rounded-full w-16 h-16" alt="{{ $client->name . 'avatar' }}"
                                         src="{{ $client->getAvatarUrl() }}">
                                 @else
                                     <img class="w-16" alt="{{ $client->name . 'avatar' }}"
                                     src="/img/avatardefault.svg">
                                 @endif
-                                <div>
-                                    <h2 class="text-2xl font-bold text-gray-700 ml-2 break-word text-justify">
+                                <div class="ms-2">
+                                    <h2 class="mt-2 text-2xl font-bold text-gray-700 break-word text-justify">
                                         {{ $client->getFullName() }}
                                     </h2>
-                                    <span class="mt-4 text-justify text-gray-600 break-all text-justify">
+                                    <div class="-mt-1 text-justify text-gray-600 break-all text-justify">
                                         {{ $client->email }}
-                                    </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex flex-col sm:relative sm:w-28 sm:flex-row

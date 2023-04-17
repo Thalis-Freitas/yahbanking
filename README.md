@@ -1,4 +1,9 @@
-# YahBanking Mariner4
+<div align="center">
+<br/>
+
+ ![logo](https://github.com/Thalis-Freitas/yahbanking/blob/26628304520f9dfa474d342a330d00539c600160/public/img/logo.svg)
+
+</div>
 
 ## Sumário
   * [Descrição do projeto](#descrição-do-projeto)
@@ -28,6 +33,11 @@
 - [X] Página de detalhes do investimento.
 - [X] Deletar investimento.
 - [X] Listagem de investimentos.
+
+### API de clientes
+
+- [X] Comando para importar dados da API e armazenar no banco.
+- [x] Script de chamada para o comando.
 
 Em desenvolvimento :warning:
 
@@ -72,22 +82,21 @@ Certifique-se de que o Docker esteja em execução em sua máquina e suba os con
 sail up -d
 ```
 
-Gere a key do projeto:
+Permita a execução do script setup.sh:
 
 ```
-sail artisan key:generate
+chmod +x setup.sh
 ```
 
-Execute as migrations e popule a aplicação:
+Rode o script abaixo, ele é responsável por:
+- Gerar a key do projeto
+- Executar as migrations
+- Popular o banco de desenvolvimento com dados fakes
+- Criar link simbólico para que os arquivos armazenados possam ser acessados publicamente
+- Importar dados da API de clientes para o banco
 
 ```
-sail artisan migrate --seed
-```
-
-Crie um link simbólico para que os arquivos armazenados possam ser acessados publicamente:
-
-```
-sail artisan storage:link
+./setup.sh
 ```
 
 Acesse o shell do container do projeto:
