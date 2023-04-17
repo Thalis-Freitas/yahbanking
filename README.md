@@ -31,7 +31,7 @@
 
 ### API de clientes
 
-- [X] Comando para importar dados da API de usuários.
+- [X] Comando para importar dados da API e armazenar no banco.
 - [x] Script de chamada para o comando.
 
 Em desenvolvimento :warning:
@@ -77,7 +77,7 @@ Certifique-se de que o Docker esteja em execução em sua máquina e suba os con
 sail up -d
 ```
 
-Permitir a execução do script setup.sh:
+Permita a execução do script setup.sh:
 
 ```
 chmod +x setup.sh
