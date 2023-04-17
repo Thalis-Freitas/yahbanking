@@ -1,4 +1,9 @@
-# YahBanking Mariner4
+<div align="center">
+<br/>
+
+ ![logo](https://github.com/Thalis-Freitas/yahbanking/blob/26628304520f9dfa474d342a330d00539c600160/public/img/logo.svg)
+
+</div>
 
 ## Sumário
   * [Descrição do projeto](#descrição-do-projeto)
