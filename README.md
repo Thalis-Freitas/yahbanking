@@ -25,6 +25,7 @@
 - [X] Página de detalhes do cliente.
 - [X] Deletar cliente.
 - [X] Listagem de clientes.
+- [X] Ao cadastrar um cliente, os valores de "valor total", "valor não investido" e "valor investido" são preenchidos automaticamente com 0.
 
 ### Investimentos
 
@@ -37,7 +38,7 @@
 ### API de clientes
 
 - [X] Comando para importar dados da API e armazenar no banco.
-- [x] Script de chamada para o comando.
+- [x] Script com chamada para o comando.
 
 Em desenvolvimento :warning:
 
@@ -58,10 +59,7 @@ cd yahbanking
 Instale as dependências:
 
 ```
-docker run --rm -it \
-  -v $PWD:/app \
-  -u $(id -u):$(id -g) \
-  composer install
+docker run --rm -it -v $PWD:/app -u $(id -u):$(id -g) composer install
 ```
 
 Crie o arquivo .env:
@@ -82,17 +80,11 @@ Certifique-se de que o Docker esteja em execução em sua máquina e suba os con
 sail up -d
 ```
 
-Permita a execução do script setup.sh:
-
-```
-chmod +x setup.sh
-```
-
 Rode o script abaixo, ele é responsável por:
 - Gerar a key do projeto
 - Executar as migrations
-- Popular o banco de desenvolvimento com dados fakes
 - Criar link simbólico para que os arquivos armazenados possam ser acessados publicamente
+- Popular o banco de desenvolvimento com dados fakes
 - Importar dados da API de clientes para o banco
 
 ```
