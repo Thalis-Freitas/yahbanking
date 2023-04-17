@@ -21,17 +21,39 @@
                 {{ session('msg') }}
             </div>
             @endif
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 font-bold">
-                    <p class="w-full p-4 bg-white font-bold rounded-t-lg">
-                        Nome: <span class="font-medium">{{ $client->name }} </span>
-                    </p>
-                    <p class="w-full mt-2 p-4 bg-white font-bold">
-                        Sobrenome: <span class="font-medium">{{ $client->last_name }} </span>
-                    </p>
-                    <p class="w-full mt-2 p-4 bg-white font-bold rounded-b-lg break-all">
-                        Email: <span class="font-medium">{{ $client->email }} </span>
-                    </p>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg
+                        flex flex-col sm:flex-row">
+                <div class="sm:min-w-[50%]">
+                    <h2 class="px-6 mt-8 text-2xl text-gray-400 font-bold">
+                        Dados cadastrais
+                    </h2>
+                    <div class="p-6 text-gray-900 font-bold">
+                        <p class="w-full p-4 bg-white rounded-t-lg">
+                            Nome: <span class="font-medium">{{ $client->name }} </span>
+                        </p>
+                        <p class="w-full mt-2 p-4 bg-white">
+                            Sobrenome: <span class="font-medium">{{ $client->last_name }} </span>
+                        </p>
+                        <p class="w-full mt-2 p-4 bg-white rounded-b-lg break-all">
+                            Email: <span class="font-medium">{{ $client->email }} </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="sm:min-w-[50%]">
+                    <h2 class="px-6 mt-4 sm:mt-8 text-2xl font-bold text-gray-400">
+                        Valores
+                    </h2>
+                    <div class="p-6 text-gray-900 font-bold">
+                        <p class="w-full p-4 bg-white font-bold rounded-t-lg">
+                            Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span>
+                        </p>
+                        <p class="w-full mt-2 p-4 bg-white font-bold">
+                            Valor não investido: <span class="text-red-700"> R${{ $client->uninvested_value }}</span>
+                        </p>
+                        <p class="w-full mt-2 p-4 bg-white font-bold rounded-b-lg break-all">
+                            Valor investido: <span class="text-green-700"> R${{ $client->invested_value }}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

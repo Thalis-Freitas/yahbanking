@@ -11,7 +11,7 @@ echo "3/5 Criando link simbólico para que os arquivos armazenados possam ser ac
 echo "4/5 Populando o banco de dados..."
 ./vendor/bin/sail artisan db:seed
 
-echo "4/5 Importando dados da API de clientes para o banco..."
+echo "5/5 Importando dados da API de clientes para o banco..."
 ./vendor/bin/sail artisan import:data
 
 echo "Concluído!"
