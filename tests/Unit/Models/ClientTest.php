@@ -35,10 +35,10 @@ class ClientTest extends TestCase
         Storage::fake('public');
         $file = UploadedFile::fake()->image('avatar.jpg');
         $path = $file->store('avatars', 'public');
-    
+
         $client = Client::factory()->create(['avatar' => $path]);
-    
-        $this->assertEquals(Storage::disk('public')->url($path), $client->getAvatarUrl());
+
+        $this->assertEquals(Storage::url($path), $client->getAvatarUrl());
     }
-    
+
 }

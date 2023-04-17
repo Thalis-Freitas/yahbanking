@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class ImportData extends Command
 {
     protected $signature = 'import:data';
-    protected $description = 'Import data from API and save to database';
+    protected $description = 'Import data from Clients API and save to database';
 
     public function handle()
     {
@@ -36,6 +36,6 @@ class ImportData extends Command
             }
         }
 
-        $this->info('Data imported successfully.');
+        $this->info('Clientes importados com sucesso.');
     }
 }

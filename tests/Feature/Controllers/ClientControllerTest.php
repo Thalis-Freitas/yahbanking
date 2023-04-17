@@ -85,7 +85,7 @@ class ClientControllerTest extends TestCase
         $response->assertViewIs('clients.edit');
         $response->assertViewHas('client');
         $response->assertOk();
-        $response->assertSeeText(['Atualizar Informações do Cliente', $client->getFullName()]);
+        $response->assertSeeText(['Atualizar Informações de', $client->getFullName()]);
     }
 
     public function test_update_method_updates_client_data()
