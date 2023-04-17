@@ -54,6 +54,24 @@
                             Valor investido: <span class="text-green-700"> R${{ $client->invested_value }}</span>
                         </p>
                     </div>
+                    <h2 class="px-6 mt-4 sm:mt-8 mb-4 text-2xl font-bold text-gray-400">
+                        Depositar valor
+                    </h2>
+                    <form method="POST" class="mb-6 mx-6"
+                    action="{{ route('clients.deposit', $client->id) }}">
+                    @csrf
+                    @method("PATCH")
+                        @error('uninvested_value')
+                            <p class="text-red-600 mt-3"> {{ $message }} </p>
+                        @enderror
+                        <input type="text" class="rounded mb-2 me-2" name="uninvested_value"
+                            placeholder="Insira o valor aqui">
+                        <button type="submit" class="px-4 py-2 text-center shadow
+                            text-white font-bold bg-emerald-700 hover:bg-emerald-900 rounded
+                            transition ease-in-out duration-500">
+                            Fazer depósito
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

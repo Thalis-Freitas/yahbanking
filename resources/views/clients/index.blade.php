@@ -42,7 +42,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-4 my-4 rounded bg-gray-300 font-bold text-gray-800 sm:flex sm:justify-around">
+                            <div class="p-4 my-4 md:mb-0 rounded bg-gray-300 font-bold text-gray-800
+                                sm:flex sm:justify-around">
                                 <div>
                                     Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span>
                                 </div>

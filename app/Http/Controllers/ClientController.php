@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
+use App\Http\Requests\DepositRequest;
 use App\Models\Client;
 
 class ClientController extends Controller
@@ -21,7 +22,7 @@ class ClientController extends Controller
 
     public function store(ClientStoreRequest $request)
     {
-        $input = $request->all();
+        $input = $request->except('uninvested_value');
         if(array_key_exists('avatar', $input)){
             $input['avatar'] = $input['avatar']->store('avatars', 'public');
         };
@@ -61,5 +62,15 @@ class ClientController extends Controller
     {
         Client::destroy($id);
         return redirect('clients')->with('msg', 'Cliente removido com sucesso!');
+    }
+
+    public function deposit(DepositRequest $request, $id)
+    {
+        $client = Client::find($id);
+        $uninvestedValue = $client->uninvested_value + $request->uninvested_value;
+        $client->update(['uninvested_value' => $uninvestedValue]);
+
+        return redirect()->route('clients.show', $id)
+            ->with('msg', 'Valor depositado com sucesso!');
     }
 }

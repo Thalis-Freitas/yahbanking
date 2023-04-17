@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Investiment;
 
 class Client extends Model
 {
@@ -14,7 +15,8 @@ class Client extends Model
         'name',
         'last_name',
         'email',
-        'avatar'
+        'avatar',
+        'uninvested_value'
     ];
 
     public function getFullName(): string

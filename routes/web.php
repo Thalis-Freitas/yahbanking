@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'investiments.destroy',
     ]);
 
+    Route::patch('clients/{id}/deposit', [ClientController::class, 'deposit'])->name('clients.deposit');
     Route::resource('/clients', ClientController::class)->names([
         'index' => 'clients.index',
         'create' => 'clients.create',

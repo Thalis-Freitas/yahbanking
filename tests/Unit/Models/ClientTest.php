@@ -14,7 +14,7 @@ class ClientTest extends TestCase
 
     public function test_it_has_the_correct_fillable_properties()
     {
-        $fillable = ['name', 'last_name', 'email', 'avatar'];
+        $fillable = ['name', 'last_name', 'email', 'avatar', 'uninvested_value'];
         $client = new Client();
 
         $this->assertEquals($fillable, $client->getFillable());
