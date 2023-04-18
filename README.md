@@ -10,6 +10,7 @@
   * [Funcionalidades](#funcionalidades)
   * [Como rodar a aplicação](#como-rodar-a-aplicação)
   * [Comando para rodar os testes](#comando-para-rodar-os-testes)
+  * [Comando para derrubar a app](#comando-para-derrubar-a-app)
 
 ## Descrição do projeto
 
@@ -89,6 +90,8 @@ Certifique-se de que o Docker esteja em execução em sua máquina e suba os con
 sail up -d
 ```
 
+OBS: Por favor, por prevenção aguarde 1 minuto para rodar o próximo comando, para que o banco de dados possa estar preparado para as migrations!
+
 Rode o script abaixo, ele é responsável por:
 - Gerar a key do projeto
 - Executar as migrations
@@ -128,4 +131,10 @@ npm run dev
 
 ```
 sail artisan test
+```
+
+## Comando para derrubar a app:
+
+```
+sail down
 ```

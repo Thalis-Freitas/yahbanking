@@ -23,7 +23,7 @@
             @endif
             @if($errors->any())
             <div class="bg-red-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                Não foi possível processar a solicitação, por favor verifique o campo abaixo e tente novamente.
+                Não foi possível processar a solicitação, por favor verifique o campo e tente novamente.
             </div>
             @endif
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg
