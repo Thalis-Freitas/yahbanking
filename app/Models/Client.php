@@ -44,4 +44,9 @@ class Client extends Model
         $totalValue = $this->invested_value + $this->uninvested_value;
         return number_format($totalValue, 2);
     }
+
+    public function investiments()
+    {
+        return $this->belongsToMany(Investiment::class)->withPivot('invested_value');
+    }
 }

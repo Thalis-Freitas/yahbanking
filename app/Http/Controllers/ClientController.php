@@ -5,7 +5,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Http\Requests\DepositRequest;
+use App\Http\Requests\ClientInvestimentStoreRequest;
 use App\Models\Client;
+use App\Models\Investiment;
 
 class ClientController extends Controller
 {
@@ -34,8 +36,14 @@ class ClientController extends Controller
 
     public function show($id)
     {
+        $investiments = Investiment::whereNotIn('id', function ($query) use ($id) {
+            $query->select('investiment_id')
+                  ->from('client_investiment')
+                  ->where('client_id', '=', $id);
+        })->orderBy('abbreviation')->get();
+
         $client = Client::find($id);
-        return view('clients.show', compact('client'));
+        return view('clients.show', compact('client', 'investiments'));
     }
 
     public function edit($id)
@@ -72,5 +80,31 @@ class ClientController extends Controller
 
         return redirect()->route('clients.show', $id)
             ->with('msg', 'Valor depositado com sucesso!');
+    }
+
+    public function investiment(ClientInvestimentStoreRequest $request, $id)
+    {
+        $data = json_decode($request->investiment);
+        $investiment = Investiment::find($data->id);
+        $client = Client::find($id);
+        $invested_value = $request->invested_value;
+
+        if ($invested_value > $client->uninvested_value) {
+            return redirect()->back()->withErrors([
+                'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).'
+            ]);
+        }
+
+        $client->invested_value += $invested_value;
+        $client->uninvested_value -= $invested_value;
+
+        $client->investiments()->attach([
+            $investiment->id => ['invested_value' => $invested_value]
+        ]);
+
+        $client->save();
+
+        return redirect()->route('clients.show', $id)
+            ->with('msg', 'Cliente vinculado com sucesso ao Investimento ' . $investiment->getAbbreviationAndName());
     }
 }

@@ -42,6 +42,11 @@
 - [X] Comando para importar dados da API e armazenar no banco.
 - [x] Script com chamada para o comando.
 
+### Investimentos de um cliente
+
+- [X] É possível vincular um cliente a um investimento com o qual ele ainda não possui vínculo na página de detalhes de um cliente.
+- [X] Listagem de investimentos de um cliente.
+
 Em desenvolvimento :warning:
 
 ## Como rodar a aplicação
