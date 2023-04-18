@@ -52,6 +52,16 @@ class InvestimentController extends Controller
 
     public function destroy($id)
     {
+        $investiment = Investiment::find($id);
+
+        foreach ($investiment->clients as $client) {
+            $invested_value = $client->investiments->find($id)->pivot->invested_value;
+            $client->uninvested_value += $invested_value;
+            $client->invested_value -= $invested_value;
+            $client->investiments()->updateExistingPivot($id, ['invested_value' => 0]);
+            $client->save();
+        }
+
         Investiment::destroy($id);
         return redirect('/')->with('msg', 'Investimento encerrado com sucesso!');
     }
