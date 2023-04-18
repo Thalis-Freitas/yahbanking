@@ -10,6 +10,7 @@
   * [Funcionalidades](#funcionalidades)
   * [Como rodar a aplicação](#como-rodar-a-aplicação)
   * [Comando para rodar os testes](#comando-para-rodar-os-testes)
+  * [Comando para derrubar a app](#comando-para-derrubar-a-app)
 
 ## Descrição do projeto
 
@@ -36,18 +37,20 @@
 - [X] Página de detalhes do investimento.
 - [X] Deletar investimento.
 - [X] Listagem de investimentos.
+- [X] Lista de clientes que possuem valores aplicados no investimento.
+- [X] Ao encerrar um investimento são devolvidos para todos os clientes seus respectivos valores aplicados.
 
 ### API de clientes
 
 - [X] Comando para importar dados da API e armazenar no banco.
 - [x] Script com chamada para o comando.
 
-### Investimentos de um cliente
+### Investimentos dos clientes
 
 - [X] É possível vincular um cliente a um investimento com o qual ele ainda não possui vínculo na página de detalhes de um cliente.
 - [X] Listagem de investimentos de um cliente.
-
-Em desenvolvimento :warning:
+- [X] Aplicar valores em investimentos já realizados.
+- [X] Resgatar valores de investimentos já realizados.
 
 ## Como rodar a aplicação
 
@@ -87,6 +90,8 @@ Certifique-se de que o Docker esteja em execução em sua máquina e suba os con
 sail up -d
 ```
 
+OBS: Por favor, por prevenção aguarde 1 minuto para rodar o próximo comando, para que o banco de dados possa estar preparado para as migrations!
+
 Rode o script abaixo, ele é responsável por:
 - Gerar a key do projeto
 - Executar as migrations
@@ -124,6 +129,14 @@ npm run dev
 
 ## Comando para rodar os testes:
 
+Para que os testes que com views funcionem corretamente execute o comando 'sail artisan test' em outra janela do terminal enquanto o 'npm run dev' estiver rodando.
+
 ```
 sail artisan test
+```
+
+## Comando para derrubar a app:
+
+```
+sail down
 ```
