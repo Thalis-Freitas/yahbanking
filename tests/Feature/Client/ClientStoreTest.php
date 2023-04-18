@@ -32,7 +32,6 @@ class ClientStoreTest extends TestCase
         ]);
     }
 
-
     public function test_only_signed_in_users_can_register_a_client()
     {
         $data = Client::factory(1)->makeOne()->toArray();
@@ -110,5 +109,20 @@ class ClientStoreTest extends TestCase
             'avatar' => 'Deve estar no formato jpeg, jpg ou png.'
         ]);
     }
-    
+
+    public function test_uninvested_value_cannot_be_set_when_creating_a_client()
+    {
+        $user = User::factory()->create();
+        $data = Client::factory(1)->makeOne()->toArray();
+
+        $response = $this->actingAs($user)->post(route('clients.store'), array_merge($data, [
+            'uninvested_value' => 100
+        ]));
+
+        $this->assertDatabaseMissing('clients', [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'uninvested_value' => 100
+        ]);
+    }
 }

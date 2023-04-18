@@ -26,6 +26,8 @@
 - [X] Deletar cliente.
 - [X] Listagem de clientes.
 - [X] Ao cadastrar um cliente, os valores de "valor total", "valor não investido" e "valor investido" são preenchidos automaticamente com 0.
+- [X] Possibilidade de depositar valores, o valor depositado é armazenado automaticamente em "valor não investido".
+- [X] Valor total é a soma de "valor não investido" com "valor investido".
 
 ### Investimentos
 
@@ -39,6 +41,11 @@
 
 - [X] Comando para importar dados da API e armazenar no banco.
 - [x] Script com chamada para o comando.
+
+### Investimentos de um cliente
+
+- [X] É possível vincular um cliente a um investimento com o qual ele ainda não possui vínculo na página de detalhes de um cliente.
+- [X] Listagem de investimentos de um cliente.
 
 Em desenvolvimento :warning:
 

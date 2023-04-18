@@ -16,7 +16,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 md:px-8">
             @if(session('msg'))
-            <div class="bg-green-700 text-white p-4 rounded font-bold mb-10">
+            <div class="bg-green-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
                 {{ session('msg') }}
             </div>
             @endif
@@ -42,7 +42,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-4 my-4 rounded bg-gray-300 font-bold text-gray-800 sm:flex sm:justify-around">
+                            <div class="p-4 my-4 md:mb-0 rounded bg-gray-300 font-bold text-gray-800
+                                sm:flex sm:justify-around">
                                 <div>
                                     Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span>
                                 </div>

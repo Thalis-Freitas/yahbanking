@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-5">
             @if($errors->any())
-            <div class="bg-red-700 text-white p-4 rounded font-bold mb-10">
+            <div class="bg-red-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
                 Não foi possível atualizar o cadastro.
             </div>
             @endif
@@ -38,7 +38,6 @@
                             <span class="text-red-600"> {{ $message }} </span>
                         @enderror
                     </div>
-                    
                     <button class="px-4 py-2 shadow text-white font-bold
                                     bg-green-700 hover:bg-green-900 rounded
                                     transition ease-in-out duration-500">
