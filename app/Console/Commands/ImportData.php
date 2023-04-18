@@ -14,7 +14,7 @@ class ImportData extends Command
 
     public function handle()
     {
-        $response = Http::get('https://reqres.in/api/users?page=1');
+        $response = Http::get('https://reqres.in/api/users?page=1',  ['timeout' => 90]);
         $data = $response->json();
 
         for ($i = 1; $i <= $data['total_pages']; $i++) {
