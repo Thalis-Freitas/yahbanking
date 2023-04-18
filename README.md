@@ -8,6 +8,7 @@
 ## Sumário
   * [Descrição do projeto](#descrição-do-projeto)
   * [Funcionalidades](#funcionalidades)
+  * [Demonstração](#demonstração)
   * [Como rodar a aplicação](#como-rodar-a-aplicação)
   * [Comando para rodar os testes](#comando-para-rodar-os-testes)
   * [Comando para derrubar a app](#comando-para-derrubar-a-app)
@@ -51,6 +52,14 @@
 - [X] Listagem de investimentos de um cliente.
 - [X] Aplicar valores em investimentos já realizados.
 - [X] Resgatar valores de investimentos já realizados.
+
+## Demonstração
+
+<div align="center">
+
+ ![Demonstração](https://github.com/Thalis-Freitas/yahbanking/blob/6beaf399fcf6257b94533d780035e3c650f81053/public/img/demo.gif)
+
+</div>
 
 ## Como rodar a aplicação
 
