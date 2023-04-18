@@ -36,18 +36,20 @@
 - [X] Página de detalhes do investimento.
 - [X] Deletar investimento.
 - [X] Listagem de investimentos.
+- [X] Lista de clientes que possuem valores aplicados no investimento.
+- [X] Ao encerrar um investimento são devolvidos para todos os clientes seus respectivos valores aplicados.
 
 ### API de clientes
 
 - [X] Comando para importar dados da API e armazenar no banco.
 - [x] Script com chamada para o comando.
 
-### Investimentos de um cliente
+### Investimentos dos clientes
 
 - [X] É possível vincular um cliente a um investimento com o qual ele ainda não possui vínculo na página de detalhes de um cliente.
 - [X] Listagem de investimentos de um cliente.
-
-Em desenvolvimento :warning:
+- [X] Aplicar valores em investimentos já realizados.
+- [X] Resgatar valores de investimentos já realizados.
 
 ## Como rodar a aplicação
 

@@ -57,6 +57,6 @@ class ClientTest extends TestCase
         ]);
 
         $client->refresh();
-        $this->assertSame('2,500.00', $client->totalValue);
+        $this->assertSame('2500.00', $client->totalValue);
     }
 }

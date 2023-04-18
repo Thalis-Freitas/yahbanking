@@ -36,13 +36,14 @@ class Client extends Model
         static::created(function (Client $client) {
             $client->uninvested_value = 0;
             $client->invested_value = 0;
+            $client->investiments()->syncWithoutDetaching([]);
         });
     }
 
     public function getTotalValueAttribute()
     {
         $totalValue = $this->invested_value + $this->uninvested_value;
-        return number_format($totalValue, 2);
+        return preg_replace('/[^0-9\.]/', '', number_format($totalValue, 2));
     }
 
     public function investiments()

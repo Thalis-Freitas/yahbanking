@@ -45,7 +45,7 @@
                             <div class="p-4 my-4 md:mb-0 rounded bg-gray-300 font-bold text-gray-800
                                 sm:flex sm:justify-around">
                                 <div>
-                                    Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span>
+                                    Valor total: <span class="text-cyan-700"> R${{ $client->total_value }}</span>
                                 </div>
                                 <div>
                                     Valor não investido: <span class="text-red-700"> R${{ $client->uninvested_value }}</span>
@@ -64,7 +64,7 @@
                                 </a>
                                 <a href="{{ route('clients.edit', $client->id) }}"
                                     class="px-4 py-2 mt-2 text-center shadow text-white font-bold
-                                        bg-blue-700 hover:bg-blue-900 rounded
+                                        bg-cyan-700 hover:bg-cyan-900 rounded
                                         transition ease-in-out duration-500 sm:me-2">
                                     Editar
                                 </a>

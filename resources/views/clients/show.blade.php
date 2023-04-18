@@ -23,7 +23,7 @@
             @endif
             @if($errors->any())
             <div class="bg-red-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                Não foi possível processar a solicitação.
+                Não foi possível processar a solicitação, por favor verifique o campo abaixo e tente novamente.
             </div>
             @endif
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg
@@ -50,7 +50,7 @@
                     </h2>
                     <div class="p-6 text-gray-900 font-bold">
                         <p class="w-full p-4 bg-white font-bold rounded-t-lg">
-                            Valor total: <span class="text-blue-700"> R${{ $client->total_value }}</span>
+                            Valor total: <span class="text-cyan-700"> R${{ $client->total_value }}</span>
                         </p>
                         <p class="w-full mt-2 p-4 bg-white font-bold">
                             Valor não investido: <span class="text-red-700"> R${{ $client->uninvested_value }}</span>
@@ -88,8 +88,8 @@
                 <form method="POST" class="mb-6 mx-6"
                 action="{{ route('clients.investiment', $client->id) }}">
                 @csrf
-                @method("PATCH")
-                    <label for="investiments" class="block text-white mb-2">Investimento</label>
+                @method("POST")
+                    <label for="investiment" class="block text-white mb-2">Investimento</label>
                     <select name="investiment" class="rounded mb-6">
                         @foreach ($investiments as $investiment)
                             <option value="{{ $investiment }}" @selected(old('investiment') == $investiment)>
@@ -114,25 +114,66 @@
                     Investimentos deste cliente
                 </h2>
                 @if ($client->investiments->isNotEmpty())
-                    <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-xl p-4 rounded
-                                grid">
+                    <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-xl p-4 rounded">
                         @foreach ($client->investiments as $investiment)
-                            <a href="{{ route('investiments.show', $investiment->id) }}">
-                                <div class="bg-white rounded p-4 m-4 relative pointer hover:bg-zinc-300">
-                                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-700">
-                                        {{ $investiment->getAbbreviationUpper() }}
-                                    </h2>
-                                    <p class="border-b-2 text-gray-600 mb-4">
-                                        Nome Comercial: {{ $investiment->name }}
-                                    </p>
-                                    <p class="text-gray-600 mb-4">
-                                        Valor Investido:
-                                        <span class="text-green-700 font-bold">
-                                            R${{ $investiment->pivot->invested_value }}
-                                        </span>
-                                    </p>
+                            <div class="bg-white rounded py-4 px-4 m-4 relative">
+                                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-700">
+                                    {{ $investiment->getAbbreviationUpper() }}
+                                </h2>
+                                <p class="text-gray-600 mb-4">
+                                    Nome Comercial: {{ $investiment->name }}
+                                </p>
+                                <a href="{{ route('investiments.show', $investiment->id) }}"
+                                    class="px-4 py-2 text-center shadow text-white font-bold
+                                        bg-cyan-700 hover:bg-cyan-900 rounded
+                                        transition ease-in-out duration-500 md:me-2">
+                                    Ver detalhes
+                                </a>
+                                <p class="text-gray-600 mt-4 pt-4 border-t-2">
+                                    Valor Investido:
+                                    <span class="text-green-700 font-bold">
+                                        R${{ $investiment->pivot->invested_value }}
+                                    </span>
+                                </p>
+                                <div class="flex flex-col md:right-px w-full md:flex-row">
+                                    <form method="POST" class="mt-4"
+                                        action="{{ route('clients.investiment.apply', $client->id) }}">
+                                        @csrf
+                                        @method("POST")
+                                        <label for="invested_value" class="block mb-2 text-gray-600">Aplicar novos valores</label>
+                                        <input type="text" class="rounded mb-2 me-2" name="invested_value"
+                                            placeholder="Insira o valor aqui">
+                                        <input type="text" class="hidden" name="investiment_id"
+                                            value="{{ $investiment->id }}">
+                                        <button type="submit" class="px-4 py-2 text-center shadow
+                                            text-white font-bold bg-emerald-700 hover:bg-emerald-900 rounded
+                                            transition ease-in-out duration-500">
+                                            Aplicar
+                                        </button>
+                                        @error('invested_value')
+                                            <p class="text-red-600 mb-3"> {{ $message }} </p>
+                                        @enderror
+                                    </form>
+                                    <form method="POST" class="mt-4 md:ms-8"
+                                        action="{{ route('clients.investiment.redeem', $client->id) }}">
+                                        @csrf
+                                        @method("POST")
+                                        <label for="invested_value" class="block mb-2 text-gray-600">Resgatar valores</label>
+                                        <input type="text" class="rounded mb-2 me-2" name="invested_value"
+                                            placeholder="Insira o valor aqui">
+                                        <input type="text" class="hidden" name="investiment_id"
+                                            value="{{ $investiment->id }}">
+                                        <button type="submit" class="px-4 py-2 text-center shadow
+                                            rounded bg-gray-300 text-red-700 hover:bg-red-600 hover:text-white
+                                            transition ease-in-out duration-500">
+                                            Resgatar
+                                        </button>
+                                        @error('invested_value')
+                                            <p class="text-red-600 mb-3"> {{ $message }} </p>
+                                        @enderror
+                                    </form>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                 @else
