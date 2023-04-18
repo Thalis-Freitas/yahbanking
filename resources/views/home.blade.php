@@ -44,7 +44,7 @@
                                 </a>
                                 <a href="{{ route('investiments.edit', $investiment->id) }}"
                                     class="px-4 py-2 mt-2 text-center shadow text-white font-bold
-                                        bg-blue-700 hover:bg-blue-900 rounded
+                                        bg-cyan-700 hover:bg-cyan-900 rounded
                                         transition ease-in-out duration-500 md:me-2">
                                     Editar
                                 </a>

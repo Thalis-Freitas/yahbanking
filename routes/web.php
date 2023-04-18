@@ -25,10 +25,10 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'clients.destroy',
     ]);
 
-    Route::patch('clients/{id}/deposit', [ClientController::class, 'deposit'])
-        ->name('clients.deposit');
-    Route::post('clients/{id}/investiment', [ClientController::class, 'investiment'])
-        ->name('clients.investiment');
+    Route::patch('clients/{id}/deposit', [ClientController::class, 'deposit'])->name('clients.deposit');
+    Route::post('clients/{id}/investiment', [ClientController::class, 'investiment'])->name('clients.investiment');
+    Route::post('clients/{id}/investiment/apply', [ClientController::class, 'apply'])->name('clients.investiment.apply');
+    Route::post('clients/{id}/investiment/redeem', [ClientController::class, 'redeem'])->name('clients.investiment.redeem');
 });
 
 require __DIR__.'/auth.php';
