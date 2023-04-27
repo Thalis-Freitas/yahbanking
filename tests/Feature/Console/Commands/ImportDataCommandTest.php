@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Console\Commands;
 
+use App\Models\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
@@ -13,6 +14,12 @@ class ImportDataCommandTest extends TestCase
 
     public function test_it_imports_data_from_api_and_saves_to_database()
     {
+        $client = new Client();
+        $client->name = 'George';
+        $client->last_name = 'Bluth';
+        $client->email = 'george.bluth@reqres.in';
+        $client->save();
+
         Http::fake([
             'https://reqres.in/api/users?page=1' => Http::response([
                 'total_pages' => 2,
@@ -47,7 +54,10 @@ class ImportDataCommandTest extends TestCase
         $this->assertDatabaseHas('clients', [
             'name' => 'George',
             'last_name' => 'Bluth',
-            'email' => 'george.bluth@reqres.in',
+            'email' => 'george.bluth@reqres.in'
+        ]);
+
+        $this->assertDatabaseMissing('users', [
             'avatar' => 'public/avatars/1.jpg'
         ]);
 
