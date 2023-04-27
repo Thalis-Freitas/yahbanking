@@ -69,7 +69,10 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
+        Client::find($id)->investiments()->detach();
+
         Client::destroy($id);
+
         return redirect('clients')->with('msg', 'Cliente removido com sucesso!');
     }
 

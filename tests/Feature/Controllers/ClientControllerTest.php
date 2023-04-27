@@ -116,6 +116,21 @@ class ClientControllerTest extends TestCase
         $this->assertEquals('Cliente removido com sucesso!', session('msg'));
     }
 
+    public function test_destroy_method_removes_client_and_investiments()
+    {
+        $user = User::factory()->create();
+        $client = Client::factory()->create();
+        $investiment = Investiment::factory()->create();
+        $client->investiments()->attach($investiment, ['invested_value' => 1000]);
+
+        $response = $this->actingAs($user)->delete(route('clients.destroy', $client->id));
+
+        $this->assertDatabaseMissing('clients', ['id' => $client->id]);
+        $this->assertDatabaseMissing('client_investiment', ['client_id' => $client->id, 'investiment_id' => $investiment->id]);
+        $response->assertRedirect('/clients');
+        $this->assertEquals('Cliente removido com sucesso!', session('msg'));
+    }
+
     public function test_deposit_successfully()
     {
         $user = User::factory()->create();
