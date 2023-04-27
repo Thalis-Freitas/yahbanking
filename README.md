@@ -138,7 +138,7 @@ npm run dev
 
 ## Comando para rodar os testes:
 
-Para que os testes que com views funcionem corretamente execute o comando 'sail artisan test' em outra janela do terminal enquanto o 'npm run dev' estiver rodando.
+Para que os testes com views funcionem corretamente execute o comando 'sail artisan test' em outra janela do terminal enquanto o 'npm run dev' estiver rodando.
 
 ```
 sail artisan test
