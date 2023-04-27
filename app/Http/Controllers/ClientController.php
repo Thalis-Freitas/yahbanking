@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApplyValuesRequest;
+use App\Http\Requests\RedeemValuesRequest;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Http\Requests\DepositRequest;
@@ -91,19 +93,19 @@ class ClientController extends Controller
         $data = json_decode($request->investiment);
         $investiment = Investiment::find($data->id);
         $client = Client::find($id);
-        $invested_value = $request->invested_value;
+        $investedValue = $request->invested_value;
 
-        if ($invested_value > $client->uninvested_value) {
+        if ($investedValue > $client->uninvestedValue) {
             return redirect()->back()->withErrors([
                 'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).'
             ]);
         }
 
-        $client->invested_value += $invested_value;
-        $client->uninvested_value -= $invested_value;
+        $client->invested_value += $investedValue;
+        $client->uninvested_value -= $investedValue;
 
         $client->investiments()->attach([
-            $investiment->id => ['invested_value' => $invested_value]
+            $investiment->id => ['invested_value' => $investedValue]
         ]);
 
         $client->save();
@@ -112,55 +114,57 @@ class ClientController extends Controller
             ->with('msg', 'Cliente vinculado com sucesso ao Investimento ' . $investiment->getAbbreviationAndName());
     }
 
-    public function apply(ClientInvestimentStoreRequest $request, $id){
+    public function apply(ApplyValuesRequest $request, $id)
+    {
         $client = Client::find($id);
-        $investiment = Investiment::find($request->investiment_id);
-        $invested_value = $request->invested_value;
+        $investiment = Investiment::find(decrypt($request->input('investiment_id')));
+        $valueToApply = $request->value_to_apply;
 
-        if ($invested_value > $client->uninvested_value) {
+        if ($valueToApply > $client->uninvested_value) {
             return redirect()->back()->withErrors([
-                'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).'
+                'value_to_apply' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).',
             ]);
         }
 
-        $client->invested_value += $invested_value;
-        $client->uninvested_value -= $invested_value;
+        $client->invested_value += $valueToApply;
+        $client->uninvested_value -= $valueToApply;
         $client->save();
 
         $investiment->clients()->syncWithoutDetaching([
-            $client->id => ['invested_value' => DB::raw('invested_value + ' . $invested_value)]
+            $client->id => ['invested_value' => DB::raw('invested_value + '.$valueToApply)],
         ]);
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Valor aplicado com sucesso ao investimento ' . $investiment->getAbbreviationAndName());
+            ->with('msg', 'Valor aplicado com sucesso ao investimento '.$investiment->getAbbreviationAndName());
     }
 
-    public function redeem(ClientInvestimentStoreRequest $request, $id)
+    public function redeem(RedeemValuesRequest $request, $id)
     {
         $client = Client::find($id);
-        $investiment = $client->investiments->find($request->investiment_id);
-        $invested_value = $request->invested_value;
+        $investiment = Investiment::find(decrypt($request->input('investiment_id')));
+        $investedValue = $client->investiments->find($investiment->id)->pivot->invested_value;
+        $valueToRedeem = $request->value_to_redeem;
 
-        if ($invested_value > $investiment->pivot->invested_value) {
+        if ($valueToRedeem > $investedValue) {
             return redirect()->back()->withErrors([
-                'invested_value' => 'Não é possível resgatar um valor maior do que o aplicado neste investimento.'
+                'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado neste investimento.',
             ]);
         }
 
-        $updated_invested_value = $investiment->pivot->invested_value - $invested_value;
+        $updatedInvestedValue = $investedValue - $valueToRedeem;
         $investiment->clients()->updateExistingPivot($client->id, [
-            'invested_value' => DB::raw('invested_value - ' . $invested_value)
+            'invested_value' => DB::raw('invested_value - '.$valueToRedeem),
         ]);
 
-        $client->uninvested_value += $invested_value;
-        $client->invested_value -= $invested_value;
+        $client->uninvested_value += $valueToRedeem;
+        $client->invested_value -= $valueToRedeem;
         $client->save();
 
-        if ($updated_invested_value == 0) {
+        if ($updatedInvestedValue == 0) {
             $investiment->clients()->detach($client->id);
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Valor resgatado com sucesso do investimento ' . $investiment->getAbbreviationAndName());
+            ->with('msg', 'Valor resgatado com sucesso do investimento '.$investiment->getAbbreviationAndName());
     }
 }
