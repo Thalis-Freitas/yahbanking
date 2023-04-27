@@ -15,24 +15,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 md:px-8">
-            @if(session('msg'))
-            <div class="bg-green-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                {{ session('msg') }}
-            </div>
-            @endif
+            @include('components.success-alert')
             @if ($clients->isNotEmpty())
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-md">
                 <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-md p-4 rounded">
                     @foreach ($clients as $client)
                         <div class="bg-white rounded p-4 m-4 md:relative">
                             <div class="flex items-center">
-                                @if ($client->avatar)
-                                    <img class="rounded-full w-16 h-16" alt="{{ $client->name . 'avatar' }}"
-                                        src="{{ $client->getAvatarUrl() }}">
-                                @else
-                                    <img class="w-16" alt="{{ $client->name . 'avatar' }}"
-                                    src="/img/avatardefault.svg">
-                                @endif
+                                @include('clients.avatar')
                                 <div class="ms-2 md:max-w-[35%] lg:max-w-[50%] xl:max-w-[60%]">
                                     <h2 class="mt-2 text-2xl font-bold text-gray-700 break-all text-justify">
                                         {{ $client->getFullName() }}

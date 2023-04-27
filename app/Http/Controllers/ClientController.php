@@ -147,7 +147,7 @@ class ClientController extends Controller
 
         if ($valueToRedeem > $investedValue) {
             return redirect()->back()->withErrors([
-                'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado neste investimento.',
+                'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado ao investimento.',
             ]);
         }
 

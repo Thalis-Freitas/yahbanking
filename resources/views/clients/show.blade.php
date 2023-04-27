@@ -4,28 +4,14 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight break-word">
                 Informações sobre: {{ $client->getFullName() }}
             </h2>
-            @if ($client->avatar)
-                <img class="rounded-full w-16 h-16" alt="{{ $client->name . 'avatar' }}"
-                    src="{{ $client->getAvatarUrl() }}">
-            @else
-                <img class="w-16" alt="{{ $client->name . 'avatar' }}"
-                    src="/img/avatardefault.svg">
-            @endif
+            @include('clients.avatar')
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8a">
-            @if(session('msg'))
-            <div class="bg-green-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                {{ session('msg') }}
-            </div>
-            @endif
-            @if($errors->any())
-            <div class="bg-red-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                Não foi possível processar a solicitação, por favor verifique o campo e tente novamente.
-            </div>
-            @endif
+            @include('components.success-alert')
+            @include('components.error-alert', ['message' => 'Não foi possível processar a solicitação, por favor verifique o erro abaixo e tente novamente.'])
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg
                         flex flex-col sm:flex-row">
                 <div class="sm:min-w-[50%]">
@@ -90,7 +76,7 @@
                 @csrf
                 @method("POST")
                     <label for="investiment" class="block text-white mb-2">Investimento</label>
-                    <select name="investiment" class="rounded mb-6">
+                    <select name="investiment" class="rounded mb-6 max-w-[100%]">
                         @foreach ($investiments as $investiment)
                             <option value="{{ $investiment }}" @selected(old('investiment') == $investiment)>
                                 {{ $investiment->getAbbreviationAndName() }}

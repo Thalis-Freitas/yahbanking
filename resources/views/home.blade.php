@@ -15,11 +15,7 @@
 
     <div class="py-6 sm:py-12">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 xl:px-8 sm:max-w-full">
-            @if(session('msg'))
-            <div class="bg-green-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                {{ session('msg') }}
-            </div>
-            @endif
+            @include('components.success-alert')
             @if ($investiments->isNotEmpty())
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-xl p-4 rounded
                             grid md:grid-cols-2">
