@@ -3,8 +3,8 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\Client;
-use App\Models\User;
 use App\Models\Investiment;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -47,7 +47,7 @@ class ClientControllerTest extends TestCase
         $clientData = Client::factory()->makeOne()->toArray();
 
         $response = $this->actingAs($user)->post(route('clients.store'), array_merge($clientData, [
-          'avatar' => $file
+            'avatar' => $file,
         ]));
         $client = Client::first();
 
@@ -71,8 +71,8 @@ class ClientControllerTest extends TestCase
         $response->assertViewHas('client');
         $response->assertOk();
         $response->assertSeeText([
-          'Informações sobre:',
-          $client->getFullName()
+            'Informações sobre:',
+            $client->getFullName(),
         ]);
     }
 
@@ -137,7 +137,7 @@ class ClientControllerTest extends TestCase
         $client = Client::factory()->create();
 
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
-            'uninvested_value' => 50.30
+            'uninvested_value' => 50.30,
         ]);
 
         $response->assertStatus(302)->assertSessionHas('msg', 'Valor depositado com sucesso!');
@@ -149,11 +149,11 @@ class ClientControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $client = Client::factory()->create([
-            'uninvested_value' => 100.00
+            'uninvested_value' => 100.00,
         ]);
 
         $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
-            'uninvested_value' => 50.00
+            'uninvested_value' => 50.00,
         ]);
 
         $client->refresh();
@@ -165,14 +165,14 @@ class ClientControllerTest extends TestCase
         $user = User::factory()->create();
         $client = Client::factory()->create([
             'uninvested_value' => 1000.00,
-            'invested_value' => 0.00
+            'invested_value' => 0.00,
         ]);
 
         $investiment = Investiment::factory()->create();
 
         $data = [
             'investiment' => json_encode(['id' => $investiment->id]),
-            'invested_value' => 200.00
+            'invested_value' => 200.00,
         ];
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), $data);
@@ -180,7 +180,8 @@ class ClientControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('clients.show', $client->id));
         $response->assertSessionHas(
-            'msg', 'Cliente vinculado com sucesso ao Investimento ' . $investiment->getAbbreviationAndName()
+            'msg',
+            'Cliente vinculado com sucesso ao Investimento '.$investiment->getAbbreviationAndName()
         );
 
         $client = $client->fresh();
@@ -198,21 +199,20 @@ class ClientControllerTest extends TestCase
         $investiment = Investiment::factory()->create();
         $client = Client::factory()->create([
             'uninvested_value' => 100.00,
-            'invested_value' => 0.00
+            'invested_value' => 0.00,
         ]);
 
         $data = [
             'investiment' => json_encode(['id' => $investiment->id]),
-            'invested_value' => 200.00
+            'invested_value' => 200.00,
         ];
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), $data);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
-            'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).'
+            'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).',
         ]);
-
 
         $client = $client->fresh();
         $investiment = $investiment->fresh();

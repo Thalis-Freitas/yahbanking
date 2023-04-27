@@ -18,7 +18,7 @@ class ImportData extends Command
         $data['total_pages'] = 1;
 
         for ($i = 1; $i <= $data['total_pages']; $i++) {
-            $response = Http::get('https://reqres.in/api/users?page=' . $i);
+            $response = Http::get('https://reqres.in/api/users?page='.$i);
             $data = $response->json();
 
             foreach ($data['data'] as $clientData) {
@@ -30,7 +30,7 @@ class ImportData extends Command
                     $client->last_name = $clientData['last_name'];
                     $client->email = $clientData['email'];
 
-                    $avatarPath = 'public/avatars/' . $clientData['id'] . '.jpg';
+                    $avatarPath = 'public/avatars/'.$clientData['id'].'.jpg';
                     $avatar = Http::get($clientData['avatar']);
                     Storage::put($avatarPath, $avatar);
                     $client->avatar = $avatarPath;

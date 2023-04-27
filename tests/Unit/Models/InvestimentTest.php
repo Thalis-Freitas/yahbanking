@@ -21,12 +21,11 @@ class InvestimentTest extends TestCase
     public function test_it_returns_uppercase_abbreviation()
     {
         $investiment = new Investiment([
-            'abbreviation' => 'its'
+            'abbreviation' => 'its',
         ]);
 
         $abbreviationUpper = $investiment->getAbbreviationUpper();
 
         $this->assertEquals('ITS', $abbreviationUpper);
     }
-
 }

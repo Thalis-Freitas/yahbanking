@@ -22,7 +22,7 @@ class ClientInvestimentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invested_value' => 'required|numeric|min:0.01|max:9999999999.99'
+            'invested_value' => 'required|numeric|min:0.01|max:9999999999.99',
         ];
     }
 
@@ -32,7 +32,7 @@ class ClientInvestimentStoreRequest extends FormRequest
             'required' => 'Este campo é obrigatório.',
             'numeric' => 'Deve ser um número (se necessário, use "." para separar as casas decimais).',
             'min' => 'Deve ser maior que 0.01.',
-            'max' => 'Deve ser menor que 9999999999.99.'
+            'max' => 'Deve ser menor que 9999999999.99.',
         ];
     }
 }

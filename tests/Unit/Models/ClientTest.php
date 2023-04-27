@@ -24,7 +24,7 @@ class ClientTest extends TestCase
     {
         $client = Client::factory()->create([
             'name' => 'John',
-            'last_name' => 'Doe'
+            'last_name' => 'Doe',
         ]);
 
         $this->assertEquals('John Doe', $client->getFullName());
@@ -53,7 +53,7 @@ class ClientTest extends TestCase
     {
         $client = Client::factory()->create([
             'invested_value' => 2000,
-            'uninvested_value' => 500
+            'uninvested_value' => 500,
         ]);
 
         $client->refresh();

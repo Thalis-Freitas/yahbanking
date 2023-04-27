@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Investiment;
 
 class Client extends Model
 {
@@ -16,7 +15,7 @@ class Client extends Model
         'last_name',
         'email',
         'avatar',
-        'uninvested_value'
+        'uninvested_value',
     ];
 
     public function getFullName(): string
@@ -43,6 +42,7 @@ class Client extends Model
     public function getTotalValueAttribute()
     {
         $totalValue = $this->invested_value + $this->uninvested_value;
+
         return preg_replace('/[^0-9\.]/', '', number_format($totalValue, 2));
     }
 

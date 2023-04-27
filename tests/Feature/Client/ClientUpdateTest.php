@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Client;
 
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Client;
 
 class ClientUpdateTest extends TestCase
 {
@@ -21,7 +21,7 @@ class ClientUpdateTest extends TestCase
             'name' => $client->name,
             'last_name' => $client->last_name,
             'email' => 'novo@email.com',
-            'avatar' => UploadedFile::fake()->create('avatar.png', 120)
+            'avatar' => UploadedFile::fake()->create('avatar.png', 120),
         ]);
 
         $client->refresh();
@@ -37,7 +37,7 @@ class ClientUpdateTest extends TestCase
         $this->patch(route('clients.update', $client->id), [
             'name' => $client->name,
             'last_name' => 'Novo Sobrenome',
-            'email' => $client->email
+            'email' => $client->email,
         ])->assertRedirect('/login');
 
         $this->assertDatabaseMissing('clients', [
@@ -132,7 +132,7 @@ class ClientUpdateTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'avatar' => 'Deve estar no formato jpeg, jpg ou png.'
+            'avatar' => 'Deve estar no formato jpeg, jpg ou png.',
         ]);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Client;
 
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Client;
 
 class ClientIndexTest extends TestCase
 {

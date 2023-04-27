@@ -19,7 +19,7 @@ class InvestimentFactory extends Factory
         return [
             'name' => $this->faker->unique()->company(),
             'abbreviation' => $this->faker->lexify('???'),
-            'description' => $this->faker->text()
+            'description' => $this->faker->text(),
         ];
     }
 }

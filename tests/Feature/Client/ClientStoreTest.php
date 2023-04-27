@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Client;
 
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Client;
 
 class ClientStoreTest extends TestCase
 {
@@ -28,7 +28,7 @@ class ClientStoreTest extends TestCase
             'email' => $data['email'],
             'name' => $data['name'],
             'last_name' => $data['last_name'],
-            'avatar' => 'avatars/' . $file->hashName(),
+            'avatar' => 'avatars/'.$file->hashName(),
         ]);
     }
 
@@ -106,7 +106,7 @@ class ClientStoreTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'avatar' => 'Deve estar no formato jpeg, jpg ou png.'
+            'avatar' => 'Deve estar no formato jpeg, jpg ou png.',
         ]);
     }
 
@@ -116,13 +116,13 @@ class ClientStoreTest extends TestCase
         $data = Client::factory(1)->makeOne()->toArray();
 
         $this->actingAs($user)->post(route('clients.store'), array_merge($data, [
-            'uninvested_value' => 100
+            'uninvested_value' => 100,
         ]));
 
         $this->assertDatabaseMissing('clients', [
             'name' => $data['name'],
             'email' => $data['email'],
-            'uninvested_value' => 100
+            'uninvested_value' => 100,
         ]);
     }
 }
