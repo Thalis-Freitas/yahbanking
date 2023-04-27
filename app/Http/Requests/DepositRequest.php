@@ -29,10 +29,10 @@ class DepositRequest extends FormRequest
     public function messages()
     {
         return [
-            'uninvested_value.required' => 'Este campo é obrigatório.',
-            'uninvested_value.numeric' => 'Deve ser um número (se necessário, use "." para separar as casas decimais).',
-            'uninvested_value.min' => 'Deve ser maior que 0.01.',
-            'uninvested_value.max' => 'Deve ser menor que 9999999999.99.'
+            'required' => 'Este campo é obrigatório.',
+            'numeric' => 'Deve ser um número (se necessário, use "." para separar as casas decimais).',
+            'min' => 'Deve ser maior que 0.01.',
+            'max' => 'Deve ser menor que 9999999999.99.'
         ];
     }
 

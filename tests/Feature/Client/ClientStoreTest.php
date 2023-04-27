@@ -115,7 +115,7 @@ class ClientStoreTest extends TestCase
         $user = User::factory()->create();
         $data = Client::factory(1)->makeOne()->toArray();
 
-        $response = $this->actingAs($user)->post(route('clients.store'), array_merge($data, [
+        $this->actingAs($user)->post(route('clients.store'), array_merge($data, [
             'uninvested_value' => 100
         ]));
 

@@ -95,7 +95,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $investedValue = $request->invested_value;
 
-        if ($investedValue > $client->uninvestedValue) {
+        if ($investedValue > $client->uninvested_value) {
             return redirect()->back()->withErrors([
                 'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).'
             ]);
