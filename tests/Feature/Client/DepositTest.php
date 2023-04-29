@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Client;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Client;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DepositTest extends TestCase
 {
@@ -18,7 +17,7 @@ class DepositTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
-            'uninvested_value' => ''
+            'uninvested_value' => '',
         ]);
 
         $response->assertSessionHasErrors(['uninvested_value' => 'Este campo é obrigatório.']);
@@ -30,11 +29,10 @@ class DepositTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
-            'uninvested_value' => 'abc'
+            'uninvested_value' => 'abc',
         ]);
 
-        $response->assertSessionHasErrors(['uninvested_value' =>
-            'Deve ser um número (se necessário, use "." para separar as casas decimais).']);
+        $response->assertSessionHasErrors(['uninvested_value' => 'Deve ser um número (se necessário, use "." para separar as casas decimais).']);
     }
 
     public function test_deposit_uninvested_value_must_be_greater_than_0_01()
@@ -43,7 +41,7 @@ class DepositTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
-            'uninvested_value' => '-5'
+            'uninvested_value' => '-5',
         ]);
 
         $response->assertSessionHasErrors(['uninvested_value' => 'Deve ser maior que 0.01.']);
@@ -55,7 +53,7 @@ class DepositTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
-            'uninvested_value' => 99999999999_99
+            'uninvested_value' => 99999999999_99,
         ]);
 
         $response->assertSessionHasErrors(['uninvested_value' => 'Deve ser menor que 9999999999.99.']);

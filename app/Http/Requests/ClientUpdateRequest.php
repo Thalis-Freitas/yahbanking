@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+
 use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -30,7 +31,7 @@ class ClientUpdateRequest extends FormRequest
                 'email',
                 Rule::unique('clients')->ignore(Client::find($this->route('client'))->id),
             ],
-            'avatar' => 'file|mimes:jpeg,jpg,png'
+            'avatar' => 'file|mimes:jpeg,jpg,png',
         ];
     }
 
@@ -40,8 +41,7 @@ class ClientUpdateRequest extends FormRequest
             'required' => 'Este campo é obrigatório.',
             'email.email' => 'Formato inválido.',
             'email.unique' => 'Este e-mail já está em uso.',
-            'avatar.mimes' => 'Deve estar no formato jpeg, jpg ou png.'
+            'avatar.mimes' => 'Deve estar no formato jpeg, jpg ou png.',
         ];
     }
-
 }

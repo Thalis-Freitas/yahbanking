@@ -24,7 +24,7 @@ class InvestimentStoreRequest extends FormRequest
         return [
             'abbreviation' => 'required',
             'name' => 'required|unique:investiments',
-            'description' => 'required'
+            'description' => 'required',
         ];
 
     }
@@ -33,7 +33,7 @@ class InvestimentStoreRequest extends FormRequest
     {
         return [
             'required' => 'Este campo é obrigatório.',
-            'name.unique' => 'Este nome comercial já está em uso.'
+            'name.unique' => 'Este nome comercial já está em uso.',
         ];
     }
 }

@@ -21,7 +21,7 @@ class InvestimentTest extends TestCase
     public function test_it_returns_uppercase_abbreviation()
     {
         $investiment = new Investiment([
-            'abbreviation' => 'its'
+            'abbreviation' => 'its',
         ]);
 
         $abbreviationUpper = $investiment->getAbbreviationUpper();
@@ -29,4 +29,15 @@ class InvestimentTest extends TestCase
         $this->assertEquals('ITS', $abbreviationUpper);
     }
 
+    public function test_it_returns_abbreviation_and_name()
+    {
+        $investiment = new Investiment([
+            'abbreviation' => 'its',
+            'name' => 'Hammes Group',
+        ]);
+
+        $abbreviationAndName = $investiment->getAbbreviationAndName();
+
+        $this->assertEquals('ITS | Hammes Group', $abbreviationAndName);
+    }
 }

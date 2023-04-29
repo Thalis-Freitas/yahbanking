@@ -4,28 +4,14 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight break-word">
                 Informações sobre: {{ $client->getFullName() }}
             </h2>
-            @if ($client->avatar)
-                <img class="rounded-full w-16 h-16" alt="{{ $client->name . 'avatar' }}"
-                    src="{{ $client->getAvatarUrl() }}">
-            @else
-                <img class="w-16" alt="{{ $client->name . 'avatar' }}"
-                    src="/img/avatardefault.svg">
-            @endif
+            @include('clients.avatar')
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8a">
-            @if(session('msg'))
-            <div class="bg-green-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                {{ session('msg') }}
-            </div>
-            @endif
-            @if($errors->any())
-            <div class="bg-red-700 text-white p-4 rounded font-bold mb-10 mx-6 sm:mx-0">
-                Não foi possível processar a solicitação, por favor verifique o campo e tente novamente.
-            </div>
-            @endif
+            @include('components.success-alert')
+            @include('components.error-alert', ['message' => 'Não foi possível processar a solicitação, por favor verifique o erro abaixo e tente novamente.'])
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg
                         flex flex-col sm:flex-row">
                 <div class="sm:min-w-[50%]">
@@ -90,7 +76,7 @@
                 @csrf
                 @method("POST")
                     <label for="investiment" class="block text-white mb-2">Investimento</label>
-                    <select name="investiment" class="rounded mb-6">
+                    <select name="investiment" class="rounded mb-6 max-w-[100%]">
                         @foreach ($investiments as $investiment)
                             <option value="{{ $investiment }}" @selected(old('investiment') == $investiment)>
                                 {{ $investiment->getAbbreviationAndName() }}
@@ -140,17 +126,17 @@
                                         action="{{ route('clients.investiment.apply', $client->id) }}">
                                         @csrf
                                         @method("POST")
-                                        <label for="invested_value" class="block mb-2 text-gray-600">Aplicar novos valores</label>
-                                        <input type="text" class="rounded mb-2 me-2" name="invested_value"
+                                        <label for="value_to_apply" class="block mb-2 text-gray-600">Aplicar novos valores</label>
+                                        <input type="text" class="rounded mb-2 me-2" name="value_to_apply"
                                             placeholder="Insira o valor aqui">
-                                        <input type="text" class="hidden" name="investiment_id"
-                                            value="{{ $investiment->id }}">
+                                        <input type="hidden" name="investiment_id"
+                                            value="{{ encrypt($investiment->id) }}">
                                         <button type="submit" class="px-4 py-2 text-center shadow
                                             text-white font-bold bg-emerald-700 hover:bg-emerald-900 rounded
                                             transition ease-in-out duration-500">
                                             Aplicar
                                         </button>
-                                        @error('invested_value')
+                                        @error('value_to_apply')
                                             <p class="text-red-600 mb-3"> {{ $message }} </p>
                                         @enderror
                                     </form>
@@ -158,17 +144,17 @@
                                         action="{{ route('clients.investiment.redeem', $client->id) }}">
                                         @csrf
                                         @method("POST")
-                                        <label for="invested_value" class="block mb-2 text-gray-600">Resgatar valores</label>
-                                        <input type="text" class="rounded mb-2 me-2" name="invested_value"
+                                        <label for="value_to_redeem" class="block mb-2 text-gray-600">Resgatar valores</label>
+                                        <input type="text" class="rounded mb-2 me-2" name="value_to_redeem"
                                             placeholder="Insira o valor aqui">
-                                        <input type="text" class="hidden" name="investiment_id"
-                                            value="{{ $investiment->id }}">
+                                        <input type="hidden" name="investiment_id"
+                                            value="{{ encrypt($investiment->id) }}">
                                         <button type="submit" class="px-4 py-2 text-center shadow
                                             rounded bg-gray-300 text-red-700 hover:bg-red-600 hover:text-white
                                             transition ease-in-out duration-500">
                                             Resgatar
                                         </button>
-                                        @error('invested_value')
+                                        @error('value_to_redeem')
                                             <p class="text-red-600 mb-3"> {{ $message }} </p>
                                         @enderror
                                     </form>

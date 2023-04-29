@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Controllers;
 
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Investiment;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class InvestimentControllerTest extends TestCase
 {
@@ -64,8 +63,8 @@ class InvestimentControllerTest extends TestCase
         $response->assertViewHas('investiment');
         $response->assertOk();
         $response->assertSeeText([
-          'Informações sobre:',
-          $investiment->getAbbreviationUpper()
+            'Informações sobre:',
+            $investiment->getAbbreviationUpper(),
         ]);
     }
 
@@ -81,7 +80,7 @@ class InvestimentControllerTest extends TestCase
         $response->assertOk();
         $response->assertSeeText([
             'Atualizar Informações do Investimento:',
-            $investiment->getAbbreviationUpper()
+            $investiment->getAbbreviationUpper(),
         ]);
     }
 

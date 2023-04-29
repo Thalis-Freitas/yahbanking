@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DepositRequest extends FormRequest
+class RedeemValuesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class DepositRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'uninvested_value' => 'required|numeric|min:0.01|max:9999999999.99',
+            'value_to_redeem' => 'required|numeric|min:0.01|max:9999999999.99',
         ];
     }
 

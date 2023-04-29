@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Investiment;
 
+use App\Models\Investiment;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Investiment;
-
 
 class InvestimentIndexTest extends TestCase
 {

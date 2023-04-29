@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+
 use App\Models\Investiment;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,7 +29,7 @@ class InvestimentUpdateRequest extends FormRequest
                 'required',
                 Rule::unique('investiments')->ignore(Investiment::find($this->route('investiment'))->id),
             ],
-            'description' => 'required'
+            'description' => 'required',
         ];
 
     }
@@ -37,7 +38,7 @@ class InvestimentUpdateRequest extends FormRequest
     {
         return [
             'required' => 'Este campo é obrigatório.',
-            'name.unique' => 'Este nome comercial já está em uso.'
+            'name.unique' => 'Este nome comercial já está em uso.',
         ];
     }
 }

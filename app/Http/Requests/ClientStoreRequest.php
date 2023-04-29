@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClientStoreRequest extends FormRequest
@@ -24,7 +25,7 @@ class ClientStoreRequest extends FormRequest
             'name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|unique:clients',
-            'avatar' => 'file|mimes:jpeg,jpg,png'
+            'avatar' => 'file|mimes:jpeg,jpg,png',
         ];
 
     }
@@ -35,8 +36,7 @@ class ClientStoreRequest extends FormRequest
             'required' => 'Este campo é obrigatório.',
             'email.email' => 'Formato inválido.',
             'email.unique' => 'Este e-mail já está em uso.',
-            'avatar.mimes' => 'Deve estar no formato jpeg, jpg ou png.'
+            'avatar.mimes' => 'Deve estar no formato jpeg, jpg ou png.',
         ];
     }
-
 }

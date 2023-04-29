@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Investiment;
 
+use App\Models\Investiment;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Investiment;
 
 class InvestimentStoreTest extends TestCase
 {
@@ -23,8 +23,8 @@ class InvestimentStoreTest extends TestCase
         $this->assertDatabaseHas('investiments', [
             'name' => $data['name'],
             'abbreviation' => $data['abbreviation'],
-            'description' => $data['description']
-        ]); 
+            'description' => $data['description'],
+        ]);
     }
 
     public function test_only_signed_in_users_can_register_a_investiment()

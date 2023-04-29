@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\Client;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Client;
-use App\Models\Investiment;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ClientInvestimentTest extends TestCase
 {
@@ -17,10 +15,9 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
-            'invested_value' => ''
+            'invested_value' => '',
         ]);
 
         $response->assertSessionHasErrors(['invested_value' => 'Este campo é obrigatório.']);
@@ -30,24 +27,21 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
-            'invested_value' => 'abc'
+            'invested_value' => 'abc',
         ]);
 
-        $response->assertSessionHasErrors(['invested_value' =>
-            'Deve ser um número (se necessário, use "." para separar as casas decimais).']);
+        $response->assertSessionHasErrors(['invested_value' => 'Deve ser um número (se necessário, use "." para separar as casas decimais).']);
     }
 
     public function test_investiment_invested_value_must_be_greater_than_0_01()
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
-            'invested_value' => '-5'
+            'invested_value' => '-5',
         ]);
 
         $response->assertSessionHasErrors(['invested_value' => 'Deve ser maior que 0.01.']);
@@ -57,10 +51,9 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
-            'invested_value' => 99999999999_99
+            'invested_value' => 99999999999_99,
         ]);
 
         $response->assertSessionHasErrors(['invested_value' => 'Deve ser menor que 9999999999.99.']);
