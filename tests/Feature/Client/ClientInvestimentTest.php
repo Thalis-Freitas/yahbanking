@@ -3,7 +3,6 @@
 namespace Tests\Feature\Client;
 
 use App\Models\Client;
-use App\Models\Investiment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,7 +15,6 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
             'invested_value' => '',
@@ -29,7 +27,6 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
             'invested_value' => 'abc',
@@ -42,7 +39,6 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
             'invested_value' => '-5',
@@ -55,7 +51,6 @@ class ClientInvestimentTest extends TestCase
     {
         $client = Client::factory()->create();
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
 
         $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), [
             'invested_value' => 99999999999_99,
