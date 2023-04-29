@@ -33,7 +33,7 @@ class InvestimentTest extends TestCase
     {
         $investiment = new Investiment([
             'abbreviation' => 'its',
-            'name' => 'Hammes Group'
+            'name' => 'Hammes Group',
         ]);
 
         $abbreviationAndName = $investiment->getAbbreviationAndName();

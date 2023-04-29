@@ -10,7 +10,6 @@ use App\Http\Requests\DepositRequest;
 use App\Http\Requests\RedeemValuesRequest;
 use App\Models\Client;
 use App\Models\Investiment;
-use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -41,13 +40,8 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        $investiments = Investiment::whereNotIn('id', function ($query) use ($id) {
-            $query->select('investiment_id')
-                  ->from('client_investiment')
-                  ->where('client_id', '=', $id);
-        })->orderBy('abbreviation')->get();
-
         $client = Client::find($id);
+        $investiments = $client->getInvestimentsNotLinked();
 
         return view('clients.show', compact('client', 'investiments'));
     }
@@ -85,8 +79,8 @@ class ClientController extends Controller
     public function deposit(DepositRequest $request, $id)
     {
         $client = Client::find($id);
-        $uninvestedValue = $client->uninvested_value + $request->uninvested_value;
-        $client->update(['uninvested_value' => $uninvestedValue]);
+        $uninvestedValue = $request->uninvested_value;
+        $client->deposit($uninvestedValue);
 
         return redirect()->route('clients.show', $id)
             ->with('msg', 'Valor depositado com sucesso!');
@@ -99,20 +93,11 @@ class ClientController extends Controller
         $client = Client::find($id);
         $investedValue = $request->invested_value;
 
-        if ($investedValue > $client->uninvested_value) {
+        if (! $client->invest($investiment, $investedValue)) {
             return redirect()->back()->withErrors([
                 'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).',
             ]);
         }
-
-        $client->invested_value += $investedValue;
-        $client->uninvested_value -= $investedValue;
-
-        $client->investiments()->attach([
-            $investiment->id => ['invested_value' => $investedValue],
-        ]);
-
-        $client->save();
 
         return redirect()->route('clients.show', $id)
             ->with('msg', 'Cliente vinculado com sucesso ao Investimento '.$investiment->getAbbreviationAndName());
@@ -124,19 +109,11 @@ class ClientController extends Controller
         $investiment = Investiment::find(decrypt($request->input('investiment_id')));
         $valueToApply = $request->value_to_apply;
 
-        if ($valueToApply > $client->uninvested_value) {
+        if (! $client->applyValueToInvestiment($investiment, $valueToApply)) {
             return redirect()->back()->withErrors([
                 'value_to_apply' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).',
             ]);
         }
-
-        $client->invested_value += $valueToApply;
-        $client->uninvested_value -= $valueToApply;
-        $client->save();
-
-        $investiment->clients()->syncWithoutDetaching([
-            $client->id => ['invested_value' => DB::raw('invested_value + '.$valueToApply)],
-        ]);
 
         return redirect()->route('clients.show', $id)
             ->with('msg', 'Valor aplicado com sucesso ao investimento '.$investiment->getAbbreviationAndName());
@@ -146,26 +123,12 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
         $investiment = Investiment::find(decrypt($request->input('investiment_id')));
-        $investedValue = $client->investiments->find($investiment->id)->pivot->invested_value;
         $valueToRedeem = $request->value_to_redeem;
 
-        if ($valueToRedeem > $investedValue) {
+        if (! $client->redeemValueFromInvestiment($investiment, $valueToRedeem)) {
             return redirect()->back()->withErrors([
                 'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado ao investimento.',
             ]);
-        }
-
-        $updatedInvestedValue = $investedValue - $valueToRedeem;
-        $investiment->clients()->updateExistingPivot($client->id, [
-            'invested_value' => DB::raw('invested_value - '.$valueToRedeem),
-        ]);
-
-        $client->uninvested_value += $valueToRedeem;
-        $client->invested_value -= $valueToRedeem;
-        $client->save();
-
-        if ($updatedInvestedValue == 0) {
-            $investiment->clients()->detach($client->id);
         }
 
         return redirect()->route('clients.show', $id)
