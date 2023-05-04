@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Informações sobre: {{ $investiment->getAbbreviationUpper() }}
+                Informações sobre: {{ $investment->getAbbreviationUpper() }}
             </h2>
         </div>
     </x-slot>
@@ -13,22 +13,22 @@
             <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <p class="w-full p-4 bg-white rounded-t-lg font-bold">
-                        Sigla: <span class="font-medium">{{ $investiment->getAbbreviationUpper() }}</span>
+                        Sigla: <span class="font-medium">{{ $investment->getAbbreviationUpper() }}</span>
                     </p>
                     <p class="w-full mt-2 p-4 bg-white font-bold">
-                        Nome Comercial: <span class="font-medium">{{ $investiment->name }}</span>
+                        Nome Comercial: <span class="font-medium">{{ $investment->name }}</span>
                     </p>
                     <p class="w-full mt-2 p-4 bg-white rounded-b-lg font-bold">
-                        Descrição: <span class="font-medium">{{ $investiment->description }}</span>
+                        Descrição: <span class="font-medium">{{ $investment->description }}</span>
                     </p>
                 </div>
                 <h2 class="px-8 mt-8 text-2xl font-bold text-gray-400">
                     Clientes deste investimento
                 </h2>
-                @if ($investiment->clients->isNotEmpty())
+                @if ($investment->clients->isNotEmpty())
                     <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-md">
                         <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-md p-4 rounded">
-                            @foreach ($investiment->clients as $client)
+                            @foreach ($investment->clients as $client)
                                 <div class="bg-white rounded p-4 m-4 md:relative">
                                     <div class="flex items-center">
                                         @include('clients.avatar')

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Client;
-use App\Models\Investiment;
+use App\Models\Investment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -61,18 +61,18 @@ class ClientTest extends TestCase
         $this->assertSame('2500.00', $client->totalValue);
     }
 
-    public function test_get_investiments_not_linked()
+    public function test_get_investments_not_linked()
     {
         $client = Client::factory()->create();
-        $investiment1 = Investiment::factory()->create();
-        $investiment2 = Investiment::factory()->create();
+        $investment1 = Investment::factory()->create();
+        $investment2 = Investment::factory()->create();
 
-        $client->investiments()->attach($investiment1, ['invested_value' => 1000]);
-        $notLinkedInvestiments = $client->getInvestimentsNotLinked();
+        $client->investments()->attach($investment1, ['invested_value' => 1000]);
+        $notLinkedInvestments = $client->getInvestmentsNotLinked();
 
-        $this->assertCount(1, $notLinkedInvestiments);
-        $this->assertFalse($notLinkedInvestiments->contains($investiment1));
-        $this->assertTrue($notLinkedInvestiments->contains($investiment2));
+        $this->assertCount(1, $notLinkedInvestments);
+        $this->assertFalse($notLinkedInvestments->contains($investment1));
+        $this->assertTrue($notLinkedInvestments->contains($investment2));
     }
 
     public function test_deposit()
@@ -92,14 +92,14 @@ class ClientTest extends TestCase
             'uninvested_value' => 1000,
             'invested_value' => 0,
         ])->refresh();
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
         $investedValue = 700;
 
-        $result = $client->invest($investiment, $investedValue);
+        $result = $client->invest($investment, $investedValue);
 
         $this->assertTrue($result);
         $this->assertEquals(700, $client->invested_value);
-        $this->assertEquals(700, $client->investiments()->where('id', $investiment->id)->first()->pivot->invested_value);
+        $this->assertEquals(700, $client->investments()->where('id', $investment->id)->first()->pivot->invested_value);
     }
 
     public function test_invest_with_insufficient_funds()
@@ -108,56 +108,56 @@ class ClientTest extends TestCase
             'uninvested_value' => 1000,
             'invested_value' => 0,
         ]);
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
         $investedValue = 1500;
 
-        $result = $client->invest($investiment, $investedValue);
+        $result = $client->invest($investment, $investedValue);
 
         $this->assertFalse($result);
         $this->assertEquals(0, $client->invested_value);
-        $this->assertDatabaseMissing('client_investiment', [
+        $this->assertDatabaseMissing('client_investment', [
             'client_id' => $client->id,
-            'investiment_id' => $investiment->id,
+            'investment_id' => $investment->id,
         ]);
     }
 
-    public function test_apply_value_to_investiment()
+    public function test_apply_value_to_investment()
     {
         $client = Client::factory()->create([
             'uninvested_value' => 1000,
             'invested_value' => 0,
         ])->refresh();
 
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
 
-        $result = $client->invest($investiment, 250);
-        $result = $client->applyValueToInvestiment($investiment, 500);
+        $result = $client->invest($investment, 250);
+        $result = $client->applyValueToInvestment($investment, 500);
 
         $this->assertTrue($result);
         $this->assertEquals(750, $client->invested_value);
         $this->assertEquals(250, $client->uninvested_value);
 
-        $investimentClient = $investiment->clients()->where('client_id', $client->id)->first();
-        $this->assertEquals(750, $investimentClient->pivot->invested_value);
+        $investmentClient = $investment->clients()->where('client_id', $client->id)->first();
+        $this->assertEquals(750, $investmentClient->pivot->invested_value);
     }
 
-    public function test_redeem_value_from_investiment()
+    public function test_redeem_value_from_investment()
     {
         $client = Client::factory()->create([
             'uninvested_value' => 1000,
             'invested_value' => 0,
         ])->refresh();
 
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
 
-        $result = $client->invest($investiment, 800);
-        $result = $client->redeemValueFromInvestiment($investiment, 500);
+        $result = $client->invest($investment, 800);
+        $result = $client->redeemValueFromInvestment($investment, 500);
 
         $this->assertTrue($result);
         $this->assertEquals(300, $client->invested_value);
         $this->assertEquals(700, $client->uninvested_value);
 
-        $investimentClient = $investiment->clients()->where('client_id', $client->id)->first();
-        $this->assertEquals(300, $investimentClient->pivot->invested_value);
+        $investmentClient = $investment->clients()->where('client_id', $client->id)->first();
+        $this->assertEquals(300, $investmentClient->pivot->invested_value);
     }
 }

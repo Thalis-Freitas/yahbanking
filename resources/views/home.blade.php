@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Investimentos') }}
             </h2>
-            <a href="{{route('investiments.create')}}"
+            <a href="{{route('investments.create')}}"
             class="px-4 py-2 shadow text-white font-bold text-center
                    bg-green-700 hover:bg-green-900 rounded
                    transition ease-in-out duration-500 ml-5">
@@ -16,36 +16,36 @@
     <div class="py-6 sm:py-12">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 xl:px-8 sm:max-w-full">
             @include('components.success-alert')
-            @if ($investiments->isNotEmpty())
+            @if ($investments->isNotEmpty())
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-xl p-4 rounded
                             grid md:grid-cols-2">
-                    @foreach ($investiments as $investiment)
+                    @foreach ($investments as $investment)
                         <div class="bg-white rounded pb-44 md:pb-20 pt-4 px-4 m-4 relative">
                             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-700">
-                                {{ $investiment->getAbbreviationUpper() }}
+                                {{ $investment->getAbbreviationUpper() }}
                             </h2>
                             <p class="border-b-2 text-gray-600 mb-4">
-                                Nome Comercial: {{ $investiment->name }}
+                                Nome Comercial: {{ $investment->name }}
                             </p>
                             <p class="mt-8 text-justify">
-                                Descrição: {{ $investiment->description }}
+                                Descrição: {{ $investment->description }}
                             </p>
                             <div class="flex flex-col md:w-28 md:flex-row px-4
                                          absolute bottom-5 left-0 w-full">
-                                <a href="{{ route('investiments.show', $investiment->id) }}"
+                                <a href="{{ route('investments.show', $investment->id) }}"
                                     class="px-4 py-2 mt-2 text-center shadow text-white font-bold
                                         bg-emerald-700 hover:bg-emerald-900 rounded
                                         transition ease-in-out duration-500 md:me-2">
                                     Visualizar
                                 </a>
-                                <a href="{{ route('investiments.edit', $investiment->id) }}"
+                                <a href="{{ route('investments.edit', $investment->id) }}"
                                     class="px-4 py-2 mt-2 text-center shadow text-white font-bold
                                         bg-cyan-700 hover:bg-cyan-900 rounded
                                         transition ease-in-out duration-500 md:me-2">
                                     Editar
                                 </a>
                                 <form class="inline" method="POST"
-                                    action="{{ route('investiments.destroy', $investiment->id) }}">
+                                    action="{{ route('investments.destroy', $investment->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="w-full px-4 py-2 shadow font-bold mt-2 text-center
@@ -65,7 +65,7 @@
                 </div>
             @endif
             <div class="mt-4">
-                {{ $investiments->links() }}
+                {{ $investments->links() }}
             </div>
         </div>
     </div>

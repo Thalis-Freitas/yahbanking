@@ -3,7 +3,7 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\Client;
-use App\Models\Investiment;
+use App\Models\Investment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -116,17 +116,17 @@ class ClientControllerTest extends TestCase
         $this->assertEquals('Cliente removido com sucesso!', session('msg'));
     }
 
-    public function test_destroy_method_removes_client_and_investiments()
+    public function test_destroy_method_removes_client_and_investments()
     {
         $user = User::factory()->create();
         $client = Client::factory()->create();
-        $investiment = Investiment::factory()->create();
-        $client->investiments()->attach($investiment, ['invested_value' => 1000]);
+        $investment = Investment::factory()->create();
+        $client->investments()->attach($investment, ['invested_value' => 1000]);
 
         $response = $this->actingAs($user)->delete(route('clients.destroy', $client->id));
 
         $this->assertDatabaseMissing('clients', ['id' => $client->id]);
-        $this->assertDatabaseMissing('client_investiment', ['client_id' => $client->id, 'investiment_id' => $investiment->id]);
+        $this->assertDatabaseMissing('client_investment', ['client_id' => $client->id, 'investment_id' => $investment->id]);
         $response->assertRedirect('/clients');
         $this->assertEquals('Cliente removido com sucesso!', session('msg'));
     }
@@ -160,7 +160,7 @@ class ClientControllerTest extends TestCase
         $this->assertEquals(150.00, $client->uninvested_value);
     }
 
-    public function test_investiment_successfully()
+    public function test_investment_successfully()
     {
         $user = User::factory()->create();
         $client = Client::factory()->create([
@@ -168,46 +168,46 @@ class ClientControllerTest extends TestCase
             'invested_value' => 0.00,
         ]);
 
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
 
         $data = [
-            'investiment' => json_encode(['id' => $investiment->id]),
+            'investment' => json_encode(['id' => $investment->id]),
             'invested_value' => 200.00,
         ];
 
-        $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), $data);
+        $response = $this->actingAs($user)->post(route('clients.investment', $client->id), $data);
 
         $response->assertStatus(302);
         $response->assertRedirect(route('clients.show', $client->id));
         $response->assertSessionHas(
             'msg',
-            'Cliente vinculado com sucesso ao Investimento '.$investiment->getAbbreviationAndName()
+            'Cliente vinculado com sucesso ao Investmento '.$investment->getAbbreviationAndName()
         );
 
         $client = $client->fresh();
-        $investiment = $investiment->fresh();
+        $investment = $investment->fresh();
 
         $this->assertEquals(200.00, $client->invested_value);
         $this->assertEquals(800.00, $client->uninvested_value);
-        $this->assertEquals(200.00, $client->investiments()->first()->pivot->invested_value);
-        $this->assertEquals(200.00, $investiment->clients()->first()->invested_value);
+        $this->assertEquals(200.00, $client->investments()->first()->pivot->invested_value);
+        $this->assertEquals(200.00, $investment->clients()->first()->invested_value);
     }
 
-    public function test_investiment_fails_if_insufficient_funds()
+    public function test_investment_fails_if_insufficient_funds()
     {
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
         $client = Client::factory()->create([
             'uninvested_value' => 100.00,
             'invested_value' => 0.00,
         ]);
 
         $data = [
-            'investiment' => json_encode(['id' => $investiment->id]),
+            'investment' => json_encode(['id' => $investment->id]),
             'invested_value' => 200.00,
         ];
 
-        $response = $this->actingAs($user)->post(route('clients.investiment', $client->id), $data);
+        $response = $this->actingAs($user)->post(route('clients.investment', $client->id), $data);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
@@ -215,11 +215,11 @@ class ClientControllerTest extends TestCase
         ]);
 
         $client = $client->fresh();
-        $investiment = $investiment->fresh();
+        $investment = $investment->fresh();
 
         $this->assertEquals(0.00, $client->invested_value);
         $this->assertEquals(100.00, $client->uninvested_value);
-        $this->assertEmpty($client->investiments);
-        $this->assertEmpty($investiment->clients);
+        $this->assertEmpty($client->investments);
+        $this->assertEmpty($investment->clients);
     }
 }

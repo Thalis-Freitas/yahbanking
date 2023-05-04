@@ -2,41 +2,41 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Investiment;
+use App\Models\Investment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
-class InvestimentTest extends TestCase
+class InvestmentTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_it_has_the_correct_fillable_properties()
     {
         $fillable = ['name', 'abbreviation', 'description'];
-        $investiment = new Investiment();
+        $investment = new Investment();
 
-        $this->assertEquals($fillable, $investiment->getFillable());
+        $this->assertEquals($fillable, $investment->getFillable());
     }
 
     public function test_it_returns_uppercase_abbreviation()
     {
-        $investiment = new Investiment([
+        $investment = new Investment([
             'abbreviation' => 'its',
         ]);
 
-        $abbreviationUpper = $investiment->getAbbreviationUpper();
+        $abbreviationUpper = $investment->getAbbreviationUpper();
 
         $this->assertEquals('ITS', $abbreviationUpper);
     }
 
     public function test_it_returns_abbreviation_and_name()
     {
-        $investiment = new Investiment([
+        $investment = new Investment([
             'abbreviation' => 'its',
             'name' => 'Hammes Group',
         ]);
 
-        $abbreviationAndName = $investiment->getAbbreviationAndName();
+        $abbreviationAndName = $investment->getAbbreviationAndName();
 
         $this->assertEquals('ITS | Hammes Group', $abbreviationAndName);
     }

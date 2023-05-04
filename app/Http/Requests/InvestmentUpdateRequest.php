@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Investment;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class InvestimentStoreRequest extends FormRequest
+class InvestmentUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +25,10 @@ class InvestimentStoreRequest extends FormRequest
     {
         return [
             'abbreviation' => 'required',
-            'name' => 'required|unique:investiments',
+            'name' => [
+                'required',
+                Rule::unique('investments')->ignore(Investment::find($this->route('investment'))->id),
+            ],
             'description' => 'required',
         ];
 
