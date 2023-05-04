@@ -72,14 +72,14 @@
                     Associar cliente a um investimento
                 </h2>
                 <form method="POST" class="mb-6 mx-6"
-                action="{{ route('clients.investiment', $client->id) }}">
+                action="{{ route('clients.investment', $client->id) }}">
                 @csrf
                 @method("POST")
-                    <label for="investiment" class="block text-white mb-2">Investimento</label>
-                    <select name="investiment" class="rounded mb-6 max-w-[100%]">
-                        @foreach ($investiments as $investiment)
-                            <option value="{{ $investiment }}" @selected(old('investiment') == $investiment)>
-                                {{ $investiment->getAbbreviationAndName() }}
+                    <label for="investment" class="block text-white mb-2">Investimento</label>
+                    <select name="investment" class="rounded mb-6 max-w-[100%]">
+                        @foreach ($investments as $investment)
+                            <option value="{{ $investment }}" @selected(old('investment') == $investment)>
+                                {{ $investment->getAbbreviationAndName() }}
                             </option>
                         @endforeach
                     </select>
@@ -99,17 +99,17 @@
                 <h2 class="px-6 mt-4 sm:mt-8 mb-4 text-2xl font-bold text-gray-400">
                     Investimentos deste cliente
                 </h2>
-                @if ($client->investiments->isNotEmpty())
+                @if ($client->investments->isNotEmpty())
                     <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-xl p-4 rounded">
-                        @foreach ($client->investiments as $investiment)
+                        @foreach ($client->investments as $investment)
                             <div class="bg-white rounded py-4 px-4 m-4 relative">
                                 <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-700">
-                                    {{ $investiment->getAbbreviationUpper() }}
+                                    {{ $investment->getAbbreviationUpper() }}
                                 </h2>
                                 <p class="text-gray-600 mb-4">
-                                    Nome Comercial: {{ $investiment->name }}
+                                    Nome Comercial: {{ $investment->name }}
                                 </p>
-                                <a href="{{ route('investiments.show', $investiment->id) }}"
+                                <a href="{{ route('investments.show', $investment->id) }}"
                                     class="px-4 py-2 text-center shadow text-white font-bold
                                         bg-cyan-700 hover:bg-cyan-900 rounded
                                         transition ease-in-out duration-500 md:me-2">
@@ -118,19 +118,19 @@
                                 <p class="text-gray-600 mt-4 pt-4 border-t-2">
                                     Valor Investido:
                                     <span class="text-green-700 font-bold">
-                                        R${{ $investiment->pivot->invested_value }}
+                                        R${{ $investment->pivot->invested_value }}
                                     </span>
                                 </p>
                                 <div class="flex flex-col md:right-px w-full md:flex-row">
                                     <form method="POST" class="mt-4"
-                                        action="{{ route('clients.investiment.apply', $client->id) }}">
+                                        action="{{ route('clients.investment.apply', $client->id) }}">
                                         @csrf
                                         @method("POST")
                                         <label for="value_to_apply" class="block mb-2 text-gray-600">Aplicar novos valores</label>
                                         <input type="text" class="rounded mb-2 me-2" name="value_to_apply"
                                             placeholder="Insira o valor aqui">
-                                        <input type="hidden" name="investiment_id"
-                                            value="{{ encrypt($investiment->id) }}">
+                                        <input type="hidden" name="investment_id"
+                                            value="{{ encrypt($investment->id) }}">
                                         <button type="submit" class="px-4 py-2 text-center shadow
                                             text-white font-bold bg-emerald-700 hover:bg-emerald-900 rounded
                                             transition ease-in-out duration-500">
@@ -141,14 +141,14 @@
                                         @enderror
                                     </form>
                                     <form method="POST" class="mt-4 md:ms-8"
-                                        action="{{ route('clients.investiment.redeem', $client->id) }}">
+                                        action="{{ route('clients.investment.redeem', $client->id) }}">
                                         @csrf
                                         @method("POST")
                                         <label for="value_to_redeem" class="block mb-2 text-gray-600">Resgatar valores</label>
                                         <input type="text" class="rounded mb-2 me-2" name="value_to_redeem"
                                             placeholder="Insira o valor aqui">
-                                        <input type="hidden" name="investiment_id"
-                                            value="{{ encrypt($investiment->id) }}">
+                                        <input type="hidden" name="investment_id"
+                                            value="{{ encrypt($investment->id) }}">
                                         <button type="submit" class="px-4 py-2 text-center shadow
                                             rounded bg-gray-300 text-red-700 hover:bg-red-600 hover:text-white
                                             transition ease-in-out duration-500">

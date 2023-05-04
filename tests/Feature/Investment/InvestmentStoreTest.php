@@ -1,45 +1,45 @@
 <?php
 
-namespace Tests\Feature\Investiment;
+namespace Tests\Feature\Investment;
 
-use App\Models\Investiment;
+use App\Models\Investment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class InvestimentStoreTest extends TestCase
+class InvestmentStoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_a_investiment_can_be_created()
+    public function test_a_investment_can_be_created()
     {
         $user = User::factory()->create();
-        $data = Investiment::factory()->makeOne()->toArray();
+        $data = Investment::factory()->makeOne()->toArray();
 
-        $response = $this->actingAs($user)->post(route('investiments.store'), $data);
+        $response = $this->actingAs($user)->post(route('investments.store'), $data);
 
-        $this->assertCount(1, Investiment::all());
-        $response->assertRedirectToRoute('investiments.show', Investiment::latest()->first());
-        $this->assertDatabaseHas('investiments', [
+        $this->assertCount(1, Investment::all());
+        $response->assertRedirectToRoute('investments.show', Investment::latest()->first());
+        $this->assertDatabaseHas('investments', [
             'name' => $data['name'],
             'abbreviation' => $data['abbreviation'],
             'description' => $data['description'],
         ]);
     }
 
-    public function test_only_signed_in_users_can_register_a_investiment()
+    public function test_only_signed_in_users_can_register_a_investment()
     {
-        $data = Investiment::factory(1)->makeOne()->toArray();
+        $data = Investment::factory(1)->makeOne()->toArray();
 
-        $this->post(route('investiments.store'), $data)->assertRedirect('/login');
-        $this->assertCount(0, Investiment::all());
+        $this->post(route('investments.store'), $data)->assertRedirect('/login');
+        $this->assertCount(0, Investment::all());
     }
 
     public function test_a_name_is_required()
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post(route('investiments.store'), [
+        $response = $this->actingAs($user)->post(route('investments.store'), [
             'name' => '',
         ]);
 
@@ -50,7 +50,7 @@ class InvestimentStoreTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post(route('investiments.store'), [
+        $response = $this->actingAs($user)->post(route('investments.store'), [
             'abbreviation' => '',
         ]);
 
@@ -61,7 +61,7 @@ class InvestimentStoreTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post(route('investiments.store'), [
+        $response = $this->actingAs($user)->post(route('investments.store'), [
             'description' => '',
         ]);
 
@@ -71,10 +71,10 @@ class InvestimentStoreTest extends TestCase
     public function test_name_must_be_unique()
     {
         $user = User::factory()->create();
-        $investiment = Investiment::factory()->create();
+        $investment = Investment::factory()->create();
 
-        $response = $this->actingAs($user)->post(route('investiments.store'), [
-            'name' => $investiment->name,
+        $response = $this->actingAs($user)->post(route('investments.store'), [
+            'name' => $investment->name,
         ]);
 
         $response->assertSessionHasErrors(['name' => 'Este nome comercial já está em uso.']);

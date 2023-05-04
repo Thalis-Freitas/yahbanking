@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Investiment extends Model
+class Investment extends Model
 {
     use HasFactory;
 
@@ -31,13 +31,13 @@ class Investiment extends Model
         return $this->belongsToMany(Client::class)->withPivot('invested_value');
     }
 
-    public function deleteInvestiment($id)
+    public function deleteInvestment($id)
     {
         foreach ($this->clients as $client) {
-            $investedValue = $client->investiments->find($id)->pivot->invested_value;
+            $investedValue = $client->investments->find($id)->pivot->invested_value;
             $client->uninvested_value += $investedValue;
             $client->invested_value -= $investedValue;
-            $client->investiments()->updateExistingPivot($id, ['invested_value' => 0]);
+            $client->investments()->updateExistingPivot($id, ['invested_value' => 0]);
             $client->save();
         }
 

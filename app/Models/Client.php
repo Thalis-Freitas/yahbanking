@@ -36,7 +36,7 @@ class Client extends Model
         static::created(function (Client $client) {
             $client->uninvested_value = 0;
             $client->invested_value = 0;
-            $client->investiments()->syncWithoutDetaching([]);
+            $client->investments()->syncWithoutDetaching([]);
         });
     }
 
@@ -47,16 +47,16 @@ class Client extends Model
         return preg_replace('/[^0-9\.]/', '', number_format($totalValue, 2));
     }
 
-    public function investiments()
+    public function investments()
     {
-        return $this->belongsToMany(Investiment::class)->withPivot('invested_value');
+        return $this->belongsToMany(Investment::class)->withPivot('invested_value');
     }
 
-    public function getInvestimentsNotLinked()
+    public function getInvestmentsNotLinked()
     {
-        return Investiment::whereNotIn('id', function ($query) {
-            $query->select('investiment_id')
-                ->from('client_investiment')
+        return Investment::whereNotIn('id', function ($query) {
+            $query->select('investment_id')
+                ->from('client_investment')
                 ->where('client_id', '=', $this->id);
         })->orderBy('abbreviation')->get();
     }
@@ -68,7 +68,7 @@ class Client extends Model
         return true;
     }
 
-    public function invest($investiment, $investedValue)
+    public function invest($investment, $investedValue)
     {
         if ($investedValue > $this->uninvested_value) {
             return false;
@@ -77,8 +77,8 @@ class Client extends Model
         $this->invested_value += $investedValue;
         $this->uninvested_value -= $investedValue;
 
-        $this->investiments()->attach([
-            $investiment->id => ['invested_value' => $investedValue],
+        $this->investments()->attach([
+            $investment->id => ['invested_value' => $investedValue],
         ]);
 
         $this->save();
@@ -86,7 +86,7 @@ class Client extends Model
         return true;
     }
 
-    public function applyValueToInvestiment($investiment, $valueToApply)
+    public function applyValueToInvestment($investment, $valueToApply)
     {
         if ($valueToApply > $this->uninvested_value) {
             return false;
@@ -96,23 +96,23 @@ class Client extends Model
         $this->uninvested_value -= $valueToApply;
         $this->save();
 
-        $investiment->clients()->syncWithoutDetaching([
+        $investment->clients()->syncWithoutDetaching([
             $this->id => ['invested_value' => DB::raw('invested_value + '.$valueToApply)],
         ]);
 
         return true;
     }
 
-    public function redeemValueFromInvestiment($investiment, $valueToRedeem)
+    public function redeemValueFromInvestment($investment, $valueToRedeem)
     {
-        $investedValue = $this->investiments->find($investiment->id)->pivot->invested_value;
+        $investedValue = $this->investments->find($investment->id)->pivot->invested_value;
 
         if ($valueToRedeem > $investedValue) {
             return false;
         }
 
         $updatedInvestedValue = $investedValue - $valueToRedeem;
-        $investiment->clients()->updateExistingPivot($this->id, [
+        $investment->clients()->updateExistingPivot($this->id, [
             'invested_value' => DB::raw('invested_value - '.$valueToRedeem),
         ]);
 
@@ -121,7 +121,7 @@ class Client extends Model
         $this->save();
 
         if ($updatedInvestedValue == 0) {
-            $investiment->clients()->detach($this->id);
+            $investment->clients()->detach($this->id);
         }
 
         return true;

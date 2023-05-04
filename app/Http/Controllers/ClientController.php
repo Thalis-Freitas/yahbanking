@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ApplyValuesRequest;
-use App\Http\Requests\ClientInvestimentStoreRequest;
+use App\Http\Requests\ClientInvestmentStoreRequest;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Http\Requests\DepositRequest;
 use App\Http\Requests\RedeemValuesRequest;
 use App\Models\Client;
-use App\Models\Investiment;
+use App\Models\Investment;
 
 class ClientController extends Controller
 {
@@ -41,9 +41,9 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
-        $investiments = $client->getInvestimentsNotLinked();
+        $investments = $client->getInvestmentsNotLinked();
 
-        return view('clients.show', compact('client', 'investiments'));
+        return view('clients.show', compact('client', 'investments'));
     }
 
     public function edit($id)
@@ -69,7 +69,7 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
-        Client::find($id)->investiments()->detach();
+        Client::find($id)->investments()->detach();
 
         Client::destroy($id);
 
@@ -86,52 +86,52 @@ class ClientController extends Controller
             ->with('msg', 'Valor depositado com sucesso!');
     }
 
-    public function investiment(ClientInvestimentStoreRequest $request, $id)
+    public function investment(ClientInvestmentStoreRequest $request, $id)
     {
-        $data = json_decode($request->investiment);
-        $investiment = Investiment::find($data->id);
+        $data = json_decode($request->investment);
+        $investment = Investment::find($data->id);
         $client = Client::find($id);
         $investedValue = $request->invested_value;
 
-        if (! $client->invest($investiment, $investedValue)) {
+        if (! $client->invest($investment, $investedValue)) {
             return redirect()->back()->withErrors([
                 'invested_value' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).',
             ]);
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Cliente vinculado com sucesso ao Investimento '.$investiment->getAbbreviationAndName());
+            ->with('msg', 'Cliente vinculado com sucesso ao investimento '.$investment->getAbbreviationAndName());
     }
 
     public function apply(ApplyValuesRequest $request, $id)
     {
         $client = Client::find($id);
-        $investiment = Investiment::find(decrypt($request->input('investiment_id')));
+        $investment = Investment::find(decrypt($request->input('investment_id')));
         $valueToApply = $request->value_to_apply;
 
-        if (! $client->applyValueToInvestiment($investiment, $valueToApply)) {
+        if (! $client->applyValueToInvestment($investment, $valueToApply)) {
             return redirect()->back()->withErrors([
                 'value_to_apply' => 'Não é possível aplicar um valor maior do que o disponível (valor não investido).',
             ]);
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Valor aplicado com sucesso ao investimento '.$investiment->getAbbreviationAndName());
+            ->with('msg', 'Valor aplicado com sucesso ao investimento '.$investment->getAbbreviationAndName());
     }
 
     public function redeem(RedeemValuesRequest $request, $id)
     {
         $client = Client::find($id);
-        $investiment = Investiment::find(decrypt($request->input('investiment_id')));
+        $investment = Investment::find(decrypt($request->input('investment_id')));
         $valueToRedeem = $request->value_to_redeem;
 
-        if (! $client->redeemValueFromInvestiment($investiment, $valueToRedeem)) {
+        if (! $client->redeemValueFromInvestment($investment, $valueToRedeem)) {
             return redirect()->back()->withErrors([
                 'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado ao investimento.',
             ]);
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Valor resgatado com sucesso do investimento '.$investiment->getAbbreviationAndName());
+            ->with('msg', 'Valor resgatado com sucesso do investimento '.$investment->getAbbreviationAndName());
     }
 }
