@@ -27,7 +27,7 @@ class InvestmentController extends Controller
         $investment = Investment::create($input);
 
         return redirect()->route('investments.show', $investment->id)
-            ->with('msg', 'Investmento cadastrado com sucesso!');
+            ->with('msg', 'Investimento cadastrado com sucesso!');
     }
 
     public function show($id)
@@ -60,6 +60,6 @@ class InvestmentController extends Controller
 
         $investment->deleteInvestment($id);
 
-        return redirect('/')->with('msg', 'Investmento encerrado com sucesso!');
+        return redirect('/')->with('msg', 'Investimento encerrado com sucesso!');
     }
 }

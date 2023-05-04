@@ -45,7 +45,7 @@ class InvestmentControllerTest extends TestCase
         $investment = Investment::first();
 
         $response->assertRedirect(route('investments.show', $investment->id));
-        $response->assertSessionHas('msg', 'Investmento cadastrado com sucesso!');
+        $response->assertSessionHas('msg', 'Investimento cadastrado com sucesso!');
         $this->assertCount(1, Investment::all());
         $this->assertEquals($investmentData['name'], $investment->name);
         $this->assertEquals($investmentData['abbreviation'], $investment->abbreviation);
@@ -108,6 +108,6 @@ class InvestmentControllerTest extends TestCase
 
         $this->assertDatabaseMissing('investments', ['id' => $investment->id]);
         $response->assertRedirect('/');
-        $this->assertEquals('Investmento encerrado com sucesso!', session('msg'));
+        $this->assertEquals('Investimento encerrado com sucesso!', session('msg'));
     }
 }

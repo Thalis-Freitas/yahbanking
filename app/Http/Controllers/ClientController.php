@@ -100,7 +100,7 @@ class ClientController extends Controller
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Cliente vinculado com sucesso ao Investmento '.$investment->getAbbreviationAndName());
+            ->with('msg', 'Cliente vinculado com sucesso ao investimento '.$investment->getAbbreviationAndName());
     }
 
     public function apply(ApplyValuesRequest $request, $id)
@@ -116,7 +116,7 @@ class ClientController extends Controller
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Valor aplicado com sucesso ao investmento '.$investment->getAbbreviationAndName());
+            ->with('msg', 'Valor aplicado com sucesso ao investimento '.$investment->getAbbreviationAndName());
     }
 
     public function redeem(RedeemValuesRequest $request, $id)
@@ -127,11 +127,11 @@ class ClientController extends Controller
 
         if (! $client->redeemValueFromInvestment($investment, $valueToRedeem)) {
             return redirect()->back()->withErrors([
-                'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado ao investmento.',
+                'value_to_redeem' => 'Não é possível resgatar um valor maior do que o aplicado ao investimento.',
             ]);
         }
 
         return redirect()->route('clients.show', $id)
-            ->with('msg', 'Valor resgatado com sucesso do investmento '.$investment->getAbbreviationAndName());
+            ->with('msg', 'Valor resgatado com sucesso do investimento '.$investment->getAbbreviationAndName());
     }
 }

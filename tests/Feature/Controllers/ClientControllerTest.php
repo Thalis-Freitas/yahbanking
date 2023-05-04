@@ -181,7 +181,7 @@ class ClientControllerTest extends TestCase
         $response->assertRedirect(route('clients.show', $client->id));
         $response->assertSessionHas(
             'msg',
-            'Cliente vinculado com sucesso ao Investmento '.$investment->getAbbreviationAndName()
+            'Cliente vinculado com sucesso ao investimento '.$investment->getAbbreviationAndName()
         );
 
         $client = $client->fresh();

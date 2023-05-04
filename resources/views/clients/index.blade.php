@@ -75,7 +75,7 @@
                 </div>
             </div>
             @else
-            <div class="p-4 font-bold bg-amber-500 text-white font-bold rounded">
+            <div class="p-4 font-bold bg-amber-500 text-white rounded">
                 Nenhum cliente encontrado!
             </div>
             @endif

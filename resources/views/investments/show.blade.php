@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 @else
-                    <div class="p-4 mx-6 mt-4 mb-6 font-bold bg-amber-500 text-white font-bold rounded">
+                    <div class="p-4 mx-6 mt-4 mb-6 font-bold bg-amber-500 text-white rounded">
                         Nenhum cliente encontrado!
                     </div>
                 @endif
