@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers;
 use App\Models\Investment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class InvestmentControllerTest extends TestCase
@@ -16,14 +17,13 @@ class InvestmentControllerTest extends TestCase
         $user = User::factory()->create();
         Investment::factory()->count(15)->create();
 
-        $response = $this->actingAs($user)->get(route('investments.index'));
+        $response = $this->actingAs($user)->get(route('home'));
 
-        $response->assertViewIs('home');
-        $response->assertViewHas('investments');
         $response->assertOk();
-        $response->assertSeeText('Investimentos');
-        $response->assertSeeInOrder(Investment::orderBy('created_at')
-          ->take(10)->pluck('name')->toArray());
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Home')
+            ->has('investments')
+        );
     }
 
     public function test_create_method_returns_view()

@@ -12,6 +12,6 @@ class InvestmentsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Investment::factory(25)->create();
+        Investment::factory(50)->create();
     }
 }

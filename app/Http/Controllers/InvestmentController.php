@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InvestmentStoreRequest;
 use App\Http\Requests\InvestmentUpdateRequest;
 use App\Models\Investment;
+use Inertia\Inertia;
 
 class InvestmentController extends Controller
 {
     public function index()
     {
-        $investments = Investment::paginate(10);
+        $investments = Investment::latest()->paginate(14);
 
-        return view('home', compact('investments'));
+        return Inertia::render('Home', [
+            'investments' => $investments
+        ]);
     }
 
     public function create()
