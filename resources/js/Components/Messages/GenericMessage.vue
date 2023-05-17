@@ -9,7 +9,7 @@ const props = defineProps({
         type: String,
         default: 'cyan-700'
     }
-})
+});
 
 </script>
 

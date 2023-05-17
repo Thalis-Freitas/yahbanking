@@ -14,7 +14,7 @@ class InvestmentController extends Controller
         $investments = Investment::latest()->paginate(14);
 
         return Inertia::render('Home', [
-            'investments' => $investments
+            'investments' => $investments,
         ]);
     }
 

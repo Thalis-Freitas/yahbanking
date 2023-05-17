@@ -20,7 +20,8 @@ class InvestmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('home'));
 
         $response->assertOk();
-        $response->assertInertia(fn (Assert $page) => $page
+        $response->assertInertia(
+            fn (Assert $page) => $page
             ->component('Home')
             ->has('investments')
         );

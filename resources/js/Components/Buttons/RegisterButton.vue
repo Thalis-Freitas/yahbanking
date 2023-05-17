@@ -1,8 +1,8 @@
 <script setup>
-import GenericButton from "@/Components/Buttons/GenericButton.vue";
+import GenericButton from '@/Components/Buttons/GenericButton.vue';
 
 </script>
 
 <template>
-    <GenericButton background="emerald"/>
+    <GenericButton background="emerald" />
 </template>
