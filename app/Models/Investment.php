@@ -16,6 +16,8 @@ class Investment extends Model
         'description',
     ];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function getAbbreviationUpper()
     {
         return Str::upper($this->abbreviation);

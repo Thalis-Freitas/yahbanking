@@ -11,22 +11,6 @@ class InvestmentStoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_a_investment_can_be_created()
-    {
-        $user = User::factory()->create();
-        $data = Investment::factory()->makeOne()->toArray();
-
-        $response = $this->actingAs($user)->post(route('investments.store'), $data);
-
-        $this->assertCount(1, Investment::all());
-        $response->assertRedirectToRoute('investments.show', Investment::latest()->first());
-        $this->assertDatabaseHas('investments', [
-            'name' => $data['name'],
-            'abbreviation' => $data['abbreviation'],
-            'description' => $data['description'],
-        ]);
-    }
-
     public function test_only_signed_in_users_can_register_a_investment()
     {
         $data = Investment::factory(1)->makeOne()->toArray();

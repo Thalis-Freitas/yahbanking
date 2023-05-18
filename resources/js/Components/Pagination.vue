@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({
     links: {
         type: Array,
-        default: () => [], // Adiciona um valor padrão vazio para a propriedade 'links'
+        default: () => []
     }
 });
 
@@ -22,7 +22,7 @@ const props = defineProps({
                     v-if="link.url === null"
                     class="px-2 py-2 mb-2 ml-1 text-sm leading-4 border-b-2 border-gray-800 text-gray-700"
                 >
-                    {{ link.label }}
+                    <span v-html="link.label"></span>
                 </div>
                 <Link
                     v-else
@@ -32,7 +32,7 @@ const props = defineProps({
                     :class="{'cursor-auto text-gray-800 border-indigo-700 hover:border-indigo-700': link.active,
                              'hover:border-gray-400': !link.active}"
                 >
-                    {{ link.label }}
+                    <span v-html="link.label"></span>
                 </Link>
             </template>
         </div>

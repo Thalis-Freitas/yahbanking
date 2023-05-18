@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div :class="`p-4 font-bold bg-${background} text-white rounded-lg m-4 sm:m-8 xl:m-16`">
+    <div :class="`p-4 font-bold bg-${background} text-white rounded-lg mb-6`">
         {{ message }}
     </div>
 </template>

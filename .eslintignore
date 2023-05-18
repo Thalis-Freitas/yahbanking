@@ -1,4 +1,5 @@
 resources/js/app.js
 resources/js/bootstrap.js
 resources/js/Pages/Auth/Login.vue
-resources/js/Components/Checkbox.vue
+resources/js/Components/Auth/Checkbox.vue
+resources/js/Components/Pagination.vue

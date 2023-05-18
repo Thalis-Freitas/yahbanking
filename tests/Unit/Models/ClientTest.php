@@ -55,9 +55,8 @@ class ClientTest extends TestCase
         $client = Client::factory()->create([
             'invested_value' => 2000,
             'uninvested_value' => 500,
-        ]);
+        ])->refresh();
 
-        $client->refresh();
         $this->assertSame('2500.00', $client->totalValue);
     }
 

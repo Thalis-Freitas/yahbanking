@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Investment;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,7 +26,7 @@ class InvestmentUpdateRequest extends FormRequest
             'abbreviation' => 'required',
             'name' => [
                 'required',
-                Rule::unique('investments')->ignore(Investment::find($this->route('investment'))->id),
+                Rule::unique('investments')->ignore($this->id),
             ],
             'description' => 'required',
         ];

@@ -96,10 +96,10 @@ class ClientControllerTest extends TestCase
         $newData = Client::factory()->makeOne()->toArray();
 
         $response = $this->actingAs($user)->patch(route('clients.update', $client->id), $newData);
+        $client->refresh();
 
         $response->assertRedirect(route('clients.show', $client->id));
         $response->assertSessionHas('msg', 'Dados atualizados com sucesso!');
-        $client->refresh();
         $this->assertEquals($newData['name'], $client->name);
         $this->assertEquals($newData['email'], $client->email);
     }
@@ -139,9 +139,9 @@ class ClientControllerTest extends TestCase
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
             'uninvested_value' => 50.30,
         ]);
+        $client->refresh();
 
         $response->assertStatus(302)->assertSessionHas('msg', 'Valor depositado com sucesso!');
-        $client->refresh();
         $this->assertEquals(50.30, $client->uninvested_value);
     }
 
@@ -155,8 +155,8 @@ class ClientControllerTest extends TestCase
         $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
             'uninvested_value' => 50.00,
         ]);
-
         $client->refresh();
+
         $this->assertEquals(150.00, $client->uninvested_value);
     }
 

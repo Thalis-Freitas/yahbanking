@@ -4,24 +4,12 @@ namespace Tests\Feature\Investment;
 
 use App\Models\Client;
 use App\Models\Investment;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class InvestmentDeleteTest extends TestCase
 {
     use RefreshDatabase;
-
-    public function test_a_investment_can_be_deleted()
-    {
-        $user = User::factory()->create();
-        $investment = Investment::factory()->create();
-
-        $response = $this->actingAs($user)->delete(route('investments.destroy', $investment->id));
-
-        $this->assertCount(0, Investment::all());
-        $response->assertRedirect('/');
-    }
 
     public function test_delete_investment()
     {

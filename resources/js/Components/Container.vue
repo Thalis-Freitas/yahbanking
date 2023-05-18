@@ -1,13 +1,4 @@
 <script setup>
-import Pagination from '@/Components/Pagination.vue';
-
-const props = defineProps({
-    links: {
-        type: Object,
-        required: true
-    }
-});
-
 </script>
 
 <template>
@@ -15,9 +6,5 @@ const props = defineProps({
         <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
             <slot name="content" />
         </div>
-        <Pagination
-            class="mt-6"
-            :links="links"
-        />
     </div>
 </template>

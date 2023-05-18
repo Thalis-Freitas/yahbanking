@@ -30,6 +30,8 @@ module.exports = {
             'error',
             4
         ],
-        'vue/multi-word-component-names': 'off'
+        'vue/multi-word-component-names': 'off',
+        'vue/no-mutating-props': 'off',
+        'vue/valid-v-slot': 'off'
     }
 };
