@@ -1,5 +1,4 @@
 <script setup>
-import ErrorsMessage from '@/Components/Messages/ErrorsMessage.vue';
 import FieldError from './FieldError.vue';
 
 const props = defineProps({
@@ -12,18 +11,10 @@ const props = defineProps({
         required: true
     },
 });
-
-const hasErrors = () => {
-    return Object.keys(props.errors).length > 0;
-};
 </script>
 
 <template>
     <div>
-        <ErrorsMessage
-            v-if="hasErrors()"
-            message="Não foi possível realizar o cadastro."
-        />
         <div class="w-full mb-6">
             <label
                 class="block text-white mb-2"

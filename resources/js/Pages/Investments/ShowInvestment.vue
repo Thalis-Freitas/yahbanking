@@ -1,14 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import BottomListItem from '@/Components/ListItems/BottomListItem.vue';
 import { computed } from 'vue';
+import Container from '@/Components/Container.vue';
 import { Head } from '@inertiajs/vue3';
 import GenericButton from '@/Components/Buttons/GenericButton.vue';
 import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
-import Container from '@/Components/Container.vue';
-import SuccessMessage from '@/Components/Messages/SuccessMessage.vue';
 import ListItem from '@/Components/ListItems/ListItem.vue';
+import ModalConfirmDelete from '@/Components/Modals/ModalConfirmDelete.vue';
+import SuccessMessage from '@/Components/Messages/SuccessMessage.vue';
 import TopListItem from '@/Components/ListItems/TopListItem.vue';
-import BottomListItem from '@/Components/ListItems/BottomListItem.vue';
 
 const props = defineProps({
     investment: {
@@ -55,13 +56,21 @@ const headerTitleValue = () => {
                 key-name="Descrição"
                 :value="investment.description"
             />
-            <div class="mt-8">
+            <div class="mt-8 flex gap-2">
                 <GenericButton
                     :href="route('investments.edit', investment.id)"
                     value="Editar"
                 />
+                <ModalConfirmDelete
+                    value="Encerrar"
+                    :model="investment"
+                    text="Todos os valores aplicados a este investimento serão devolvidos!"
+                    confirm-button-text="Sim, encerrar!"
+                    status-info="Encerrado"
+                    message="Investimento encerrado com sucesso!"
+                    route-name="investments.destroy"
+                />
             </div>
-
         </Container>
     </AuthenticatedLayout>
 </template>

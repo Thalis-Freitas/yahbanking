@@ -110,7 +110,10 @@ class InvestmentControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('investments.destroy', $investment->id));
 
         $response->assertRedirect(route('home'));
-        $response->assertSessionHas('msg', 'Investimento encerrado com sucesso!');
+        $response->assertSessionHas(
+            'msg',
+            'Investimento '.$investment->getAbbreviationUpper().' encerrado com sucesso!'
+        );
         $this->assertDatabaseMissing('investments', ['id' => $investment->id]);
         $this->assertCount(0, Investment::all());
     }

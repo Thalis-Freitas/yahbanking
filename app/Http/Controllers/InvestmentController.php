@@ -51,6 +51,6 @@ class InvestmentController extends Controller
         $investment->deleteInvestment($investment->id);
 
         return redirect()->route('home')
-            ->with('msg', 'Investimento encerrado com sucesso!');
+            ->with('msg', 'Investimento '.$investment->getAbbreviationUpper().' encerrado com sucesso!');
     }
 }

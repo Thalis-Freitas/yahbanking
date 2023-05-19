@@ -5,32 +5,34 @@ import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
 import InvestmentsForm from '@/Components/Forms/InvestmentsForm.vue';
 import Container from '@/Components/Container.vue';
 import GenericSubmit from '@/Components/Buttons/GenericSubmit.vue';
+import { showModal } from '@/modalError';
 
 const props = defineProps({
     investment: {
         type: Object,
         default: () => ({})
-    },
-    errors: {
-        type: Object,
-        default: () => ({})
     }
 });
+
+const titleValue = () => {
+    return `Editar Investimento ${ props.investment.abbreviation.toUpperCase() }`;
+};
 
 const form = useForm(props.investment);
 
 const submit = () => {
     form.put(route('investments.update', form.id));
+    showModal(form, 'Não foi possível atualizar o cadastro!');
 };
 
 </script>
 
 <template>
-    <Head title="Editar Investimento" />
+    <Head :title="titleValue()" />
 
     <AuthenticatedLayout>
         <template #header>
-            <HeaderTitle title="Editar Investimento" />
+            <HeaderTitle :title="titleValue()" />
         </template>
         <Container #content>
             <form @submit.prevent="submit">

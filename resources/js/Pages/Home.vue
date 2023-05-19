@@ -1,14 +1,14 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { computed } from 'vue';
-import SubmitDelete from '@/Components/Buttons/SubmitDelete.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import GenericButton from '@/Components/Buttons/GenericButton.vue';
 import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
 import PaginatedContainer from '@/Components/PaginatedContainer.vue';
 import RegisterButton from '@/Components/Buttons/RegisterButton.vue';
 import SecondaryTitle from '@/Components/Titles/SecondaryTitle.vue';
 import ShowButton from '@/Components/Buttons/ShowButton.vue';
+import ModalConfirmDelete from '@/Components/Modals/ModalConfirmDelete.vue';
 import SuccessMessage from '@/Components/Messages/SuccessMessage.vue';
 import WarnMessage from '@/Components/Messages/WarnMessage.vue';
 
@@ -25,12 +25,6 @@ const computedInvestments = computed(() => {
         abbreviation: investment.abbreviation.toUpperCase()
     }));
 });
-
-const destroy = (id) => {
-    if (confirm('Tem certeza que deseja excluir este investimento? Todos os valores aplicados serão devolvidos.')) {
-        router.delete(route('investments.destroy', id));
-    }
-};
 
 </script>
 
@@ -77,7 +71,15 @@ const destroy = (id) => {
                                 :href="route('investments.edit', investment.id)"
                                 value="Editar"
                             />
-                            <SubmitDelete @click="destroy(investment.id)" />
+                            <ModalConfirmDelete
+                                value="Encerrar"
+                                :model="investment"
+                                text="Todos os valores aplicados a este investimento serão devolvidos!"
+                                confirm-button-text="Sim, encerrar!"
+                                status-info="Encerrado"
+                                message="Investimento encerrado com sucesso!"
+                                route-name="investments.destroy"
+                            />
                         </div>
                     </section>
                 </div>

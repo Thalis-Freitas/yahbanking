@@ -5,13 +5,7 @@ import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
 import InvestmentsForm from '@/Components/Forms/InvestmentsForm.vue';
 import Container from '@/Components/Container.vue';
 import SubmitRegister from '@/Components/Buttons/SubmitRegister.vue';
-
-const props = defineProps({
-    errors: {
-        type: Object,
-        default: () => ({})
-    }
-});
+import { showModal } from '@/modalError';
 
 const form = useForm({
     abbreviation: '',
@@ -21,6 +15,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('investments.store'));
+    showModal(form, 'Não foi possível realizar o cadastro!');
 };
 
 </script>
