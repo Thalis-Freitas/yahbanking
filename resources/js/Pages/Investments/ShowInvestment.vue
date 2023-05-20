@@ -7,7 +7,7 @@ import { Head } from '@inertiajs/vue3';
 import GenericButton from '@/Components/Buttons/GenericButton.vue';
 import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
 import ListItem from '@/Components/ListItems/ListItem.vue';
-import ModalConfirmDelete from '@/Components/Modals/ModalConfirmDelete.vue';
+import ModalDeleteInvestment from '@/Components/Modals/ModalDeleteInvestment.vue';
 import SuccessMessage from '@/Components/Messages/SuccessMessage.vue';
 import TopListItem from '@/Components/ListItems/TopListItem.vue';
 
@@ -61,14 +61,8 @@ const headerTitleValue = () => {
                     :href="route('investments.edit', investment.id)"
                     value="Editar"
                 />
-                <ModalConfirmDelete
-                    value="Encerrar"
+                <ModalDeleteInvestment
                     :model="investment"
-                    text="Todos os valores aplicados a este investimento serão devolvidos!"
-                    confirm-button-text="Sim, encerrar!"
-                    status-info="Encerrado"
-                    message="Investimento encerrado com sucesso!"
-                    route-name="investments.destroy"
                 />
             </div>
         </Container>

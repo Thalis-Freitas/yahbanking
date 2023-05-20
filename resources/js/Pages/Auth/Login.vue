@@ -2,9 +2,9 @@
 import Checkbox from '@/Components/Auth/Checkbox.vue'
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/Auth/InputError.vue';
-import InputLabel from '@/Components/Auth/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue'
 import PrimaryButton from '@/Components/Auth/PrimaryButton.vue';
-import TextInput from '@/Components/Auth/TextInput.vue';
+import TextInput from '@/Components/Forms/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps({

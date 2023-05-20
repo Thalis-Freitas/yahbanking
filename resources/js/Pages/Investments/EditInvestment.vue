@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { computed } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
 import InvestmentsForm from '@/Components/Forms/InvestmentsForm.vue';
@@ -14,9 +15,9 @@ const props = defineProps({
     }
 });
 
-const titleValue = () => {
+const titleValue = computed(() => {
     return `Editar Investimento ${ props.investment.abbreviation.toUpperCase() }`;
-};
+});
 
 const form = useForm(props.investment);
 
@@ -28,11 +29,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Head :title="titleValue()" />
+    <Head :title="titleValue" />
 
     <AuthenticatedLayout>
         <template #header>
-            <HeaderTitle :title="titleValue()" />
+            <HeaderTitle :title="titleValue" />
         </template>
         <Container #content>
             <form @submit.prevent="submit">

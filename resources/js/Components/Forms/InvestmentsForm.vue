@@ -1,5 +1,8 @@
 <script setup>
-import FieldError from './FieldError.vue';
+import FieldError from '@/Components/Forms/FieldError.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
+import Textarea from '@/Components/Forms/Textarea.vue';
+import TextInput from '@/Components/Forms/TextInput.vue';
 
 const props = defineProps({
     form: {
@@ -14,44 +17,48 @@ const props = defineProps({
 </script>
 
 <template>
-    <div>
+    <section>
         <div class="w-full mb-6">
-            <label
-                class="block text-white mb-2"
+            <InputLabel
+                classes="block text-white mb-2"
                 for="abbreviation"
-            >Sigla</label>
-            <input
+                value="Sigla"
+            />
+            <TextInput
                 id="abbreviation"
                 v-model="form.abbreviation"
-                class="w-full rounded-lg"
+                :model-value="form.abbreviation"
                 type="text"
-            >
+                autofocus
+            />
             <FieldError :error="errors.abbreviation" />
         </div>
         <div class="w-full mb-6">
-            <label
-                class="block text-white mb-2"
+            <InputLabel
+                classes="block text-white mb-2"
                 for="name"
-            >Nome Comercial</label>
-            <input
+                value="Nome Comercial"
+            />
+            <TextInput
                 id="name"
                 v-model="form.name"
-                class="w-full rounded-lg"
+                :model-value="form.name"
                 type="text"
-            >
+            />
             <FieldError :error="errors.name" />
         </div>
         <div class="w-full mb-6">
-            <label
-                class="block text-white mb-2"
+            <InputLabel
+                classes="block text-white mb-2"
                 for="description"
-            >Descrição</label>
-            <textarea
+                value="Descrição"
+            />
+            <Textarea
                 id="description"
                 v-model="form.description"
-                class="w-full rounded-lg"
+                :model-value="form.description"
             />
             <FieldError :error="errors.description" />
         </div>
-    </div>
+    </section>
 </template>

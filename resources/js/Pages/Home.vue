@@ -8,7 +8,7 @@ import PaginatedContainer from '@/Components/PaginatedContainer.vue';
 import RegisterButton from '@/Components/Buttons/RegisterButton.vue';
 import SecondaryTitle from '@/Components/Titles/SecondaryTitle.vue';
 import ShowButton from '@/Components/Buttons/ShowButton.vue';
-import ModalConfirmDelete from '@/Components/Modals/ModalConfirmDelete.vue';
+import ModalDeleteInvestment from '@/Components/Modals/ModalDeleteInvestment.vue';
 import SuccessMessage from '@/Components/Messages/SuccessMessage.vue';
 import WarnMessage from '@/Components/Messages/WarnMessage.vue';
 
@@ -71,14 +71,8 @@ const computedInvestments = computed(() => {
                                 :href="route('investments.edit', investment.id)"
                                 value="Editar"
                             />
-                            <ModalConfirmDelete
-                                value="Encerrar"
+                            <ModalDeleteInvestment
                                 :model="investment"
-                                text="Todos os valores aplicados a este investimento serão devolvidos!"
-                                confirm-button-text="Sim, encerrar!"
-                                status-info="Encerrado"
-                                message="Investimento encerrado com sucesso!"
-                                route-name="investments.destroy"
                             />
                         </div>
                     </section>

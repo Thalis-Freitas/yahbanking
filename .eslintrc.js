@@ -32,6 +32,7 @@ module.exports = {
         ],
         'vue/multi-word-component-names': 'off',
         'vue/no-mutating-props': 'off',
-        'vue/valid-v-slot': 'off'
+        'vue/valid-v-slot': 'off',
+        'vue/no-textarea-mustache': 'off'
     }
 };

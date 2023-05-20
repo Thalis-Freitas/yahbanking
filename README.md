@@ -112,22 +112,16 @@ Rode o script abaixo, ele é responsável por:
 ./setup.sh
 ```
 
-Acesse o shell do container do projeto:
-
-```
-sail shell
-```
-
 Instale as dependências de compilação:
 
 ```
-npm install
+sail npm install
 ```
 
 Compile o projeto:
 
 ```
-npm run dev
+sail npm run dev
 ```
 
 * Acesse http://localhost e faça login com o usuário já cadastrado no sistema:
@@ -136,7 +130,7 @@ npm run dev
 | :----- | :----- |
 | mariner4_gestao@yahbanking.com | password |
 
-## Comando para rodar os testes:
+## Comando para rodar os testes
 
 Para que os testes com views funcionem corretamente execute o comando `sail artisan test` em outra janela do terminal enquanto o `npm run dev` estiver rodando.
 
@@ -144,7 +138,7 @@ Para que os testes com views funcionem corretamente execute o comando `sail arti
 sail artisan test
 ```
 
-## Comando para derrubar a app:
+## Comando para derrubar a app
 
 ```
 sail down
