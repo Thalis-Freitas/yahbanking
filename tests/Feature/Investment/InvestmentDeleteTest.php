@@ -18,7 +18,7 @@ class InvestmentDeleteTest extends TestCase
         $client2 = Client::factory()->create(['uninvested_value' => 1000])->refresh();
 
         $investment->clients()->attach([$client1->id, $client2->id], ['invested_value' => 500]);
-        $investment->deleteInvestment($investment->id);
+        $investment->deleteInvestment();
         $this->assertDatabaseMissing('investments', ['id' => $investment->id]);
 
         $this->assertEquals(800, $client1->uninvested_value);

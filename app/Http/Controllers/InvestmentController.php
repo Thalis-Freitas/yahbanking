@@ -48,7 +48,7 @@ class InvestmentController extends Controller
 
     public function destroy(Investment $investment)
     {
-        $investment->deleteInvestment($investment->id);
+        $investment->deleteInvestment();
 
         return redirect()->route('home')
             ->with('msg', 'Investimento '.$investment->getAbbreviationUpper().' encerrado com sucesso!');

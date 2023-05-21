@@ -19,7 +19,7 @@ module.exports = {
 
     safelist: [
         {
-            pattern: /bg-(cyan|green|emerald)-(700|900)/,
+            pattern: /bg-(amber|cyan|green|emerald)-(500|700|900)/,
             variants: ['hover'],
         },
     ],

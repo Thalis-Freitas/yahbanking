@@ -33,13 +33,13 @@ class Investment extends Model
         return $this->belongsToMany(Client::class)->withPivot('invested_value');
     }
 
-    public function deleteInvestment($id)
+    public function deleteInvestment()
     {
         foreach ($this->clients as $client) {
-            $investedValue = $client->investments->find($id)->pivot->invested_value;
+            $investedValue = $client->investments->find($this->id)->pivot->invested_value;
             $client->uninvested_value += $investedValue;
             $client->invested_value -= $investedValue;
-            $client->investments()->updateExistingPivot($id, ['invested_value' => 0]);
+            $client->investments()->updateExistingPivot($this->id, ['invested_value' => 0]);
             $client->save();
         }
 
