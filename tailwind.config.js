@@ -17,5 +17,12 @@ module.exports = {
         },
     },
 
+    safelist: [
+        {
+            pattern: /bg-(cyan|green|emerald)-(700|900)/,
+            variants: ['hover'],
+        },
+    ],
+
     plugins: [require('@tailwindcss/forms')],
 };
