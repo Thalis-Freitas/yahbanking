@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { computed } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
-import InvestmentsForm from '@/Components/Forms/InvestmentsForm.vue';
+import InvestmentsForm from '@/Components/Investments/InvestmentsForm.vue';
 import Container from '@/Components/Container.vue';
 import GenericSubmit from '@/Components/Buttons/GenericSubmit.vue';
 import { showModal } from '@/modalError';

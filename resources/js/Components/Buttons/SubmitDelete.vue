@@ -2,7 +2,7 @@
 const props = defineProps({
     value: {
         type: String,
-        default: 'Excluir'
+        default: 'Deletar'
     }
 });
 </script>

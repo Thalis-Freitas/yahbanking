@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import HeaderTitle from '@/Components/Titles/HeaderTitle.vue';
-import InvestmentsForm from '@/Components/Forms/InvestmentsForm.vue';
+import InvestmentsForm from '@/Components/Investments/InvestmentsForm.vue';
 import Container from '@/Components/Container.vue';
 import SubmitRegister from '@/Components/Buttons/SubmitRegister.vue';
 import { showModal } from '@/modalError';

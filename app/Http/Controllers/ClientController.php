@@ -16,8 +16,11 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::latest()->paginate(10);
+        foreach ($clients as $client) {
+            $client->avatar = $client->getAvatarUrl();
+        }
 
-        return view('clients.index', compact('clients'));
+        return inertia('Clients/ClientsIndex', compact('clients'));
     }
 
     public function create()
@@ -38,40 +41,35 @@ class ClientController extends Controller
             ->with('msg', 'Cliente cadastrado com sucesso!');
     }
 
-    public function show($id)
+    public function show(Client $client)
     {
-        $client = Client::find($id);
         $investments = $client->getInvestmentsNotLinked();
 
         return view('clients.show', compact('client', 'investments'));
     }
 
-    public function edit($id)
+    public function edit(Client $client)
     {
-        $client = Client::find($id);
-
         return view('clients.edit', compact('client'));
     }
 
-    public function update(ClientUpdateRequest $request, $id)
+    public function update(ClientUpdateRequest $request, Client $client)
     {
-        $input = $request->all();
+        $input = $request->validated();
         if (array_key_exists('avatar', $input)) {
             $input['avatar'] = $input['avatar']->store('avatars', 'public');
         }
-        $client = Client::find($id);
 
         $client->update($input);
 
-        return redirect()->route('clients.show', $id)
+        return redirect()->route('clients.show', $client->id)
             ->with('msg', 'Dados atualizados com sucesso!');
     }
 
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        Client::find($id)->investments()->detach();
-
-        Client::destroy($id);
+        $client->investments()->detach();
+        $client->delete();
 
         return redirect('clients')->with('msg', 'Cliente removido com sucesso!');
     }

@@ -8,25 +8,26 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class ClientControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_index_method_returns_view_with_paginated_clients()
+    public function test_index_method_returns_page_with_paginated_clients()
     {
         $user = User::factory()->create();
         Client::factory()->count(15)->create();
 
         $response = $this->actingAs($user)->get(route('clients.index'));
 
-        $response->assertViewIs('clients.index');
-        $response->assertViewHas('clients');
         $response->assertOk();
-        $response->assertSeeText('Gerenciamento de Clientes');
-        $response->assertSeeInOrder(Client::orderByDesc('created_at')
-          ->take(10)->pluck('name')->toArray());
+        $response->assertInertia(
+            fn (Assert $page) => $page
+            ->component('Clients/ClientsIndex')
+            ->has('clients')
+        );
     }
 
     public function test_create_method_returns_view()
