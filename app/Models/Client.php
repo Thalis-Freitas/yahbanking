@@ -19,6 +19,8 @@ class Client extends Model
         'uninvested_value',
     ];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function getFullName(): string
     {
         return "{$this->name} {$this->last_name}";

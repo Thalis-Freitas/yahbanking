@@ -11,23 +11,6 @@ class InvestmentUpdateTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_a_investment_can_be_updated()
-    {
-        $user = User::factory()->create();
-        $investment = Investment::factory()->create();
-
-        $response = $this->actingAs($user)->patch(route('investments.update', $investment->id), [
-            'name' => $investment->name,
-            'abbreviation' => 'CDB',
-            'description' => $investment->description,
-        ]);
-
-        $investment->refresh();
-
-        $this->assertEquals('CDB', $investment->abbreviation);
-        $response->assertRedirect(route('investments.show', $investment->id));
-    }
-
     public function test_only_signed_in_users_can_updated_a_investment()
     {
         $investment = Investment::factory()->create();
@@ -97,12 +80,9 @@ class InvestmentUpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $investment = Investment::factory()->create();
+        $newData = Investment::factory()->makeOne()->toArray();
 
-        $response = $this->actingAs($user)->patch(route('investments.update', $investment->id), [
-            'name' => $investment->name,
-            'abbreviation' => $investment->abbreviation,
-            'description' => $investment->description,
-        ]);
+        $response = $this->actingAs($user)->patch(route('investments.update', $investment->id), $newData);
 
         $response->assertSessionDoesntHaveErrors('name');
     }

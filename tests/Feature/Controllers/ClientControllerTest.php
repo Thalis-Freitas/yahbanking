@@ -8,28 +8,29 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class ClientControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_index_method_returns_view_with_paginated_clients()
+    public function test_index_method_returns_page_with_clients()
     {
         $user = User::factory()->create();
         Client::factory()->count(15)->create();
 
         $response = $this->actingAs($user)->get(route('clients.index'));
 
-        $response->assertViewIs('clients.index');
-        $response->assertViewHas('clients');
         $response->assertOk();
-        $response->assertSeeText('Gerenciamento de Clientes');
-        $response->assertSeeInOrder(Client::orderByDesc('created_at')
-          ->take(10)->pluck('name')->toArray());
+        $response->assertInertia(
+            fn (Assert $page) => $page
+            ->component('Clients/ClientsIndex')
+            ->has('clients')
+        );
     }
 
-    public function test_create_method_returns_view()
+    public function test_create_method_returns_page()
     {
         $user = User::factory()->create();
 
@@ -60,23 +61,22 @@ class ClientControllerTest extends TestCase
         Storage::disk('public')->assertExists($client->avatar);
     }
 
-    public function test_show_method_returns_view_with_client_data()
+    public function test_show_method_returns_page_with_client_data()
     {
         $user = User::factory()->create();
         $client = Client::factory()->create();
 
         $response = $this->actingAs($user)->get(route('clients.show', $client->id));
 
-        $response->assertViewIs('clients.show');
-        $response->assertViewHas('client');
         $response->assertOk();
-        $response->assertSeeText([
-            'Informações sobre:',
-            $client->getFullName(),
-        ]);
+        $response->assertInertia(
+            fn (Assert $page) => $page
+            ->component('Clients/ShowClient')
+                ->has('client')
+        );
     }
 
-    public function test_edit_method_returns_view_with_client_data()
+    public function test_edit_method_returns_page_with_client_data()
     {
         $user = User::factory()->create();
         $client = Client::factory()->create();
@@ -96,10 +96,10 @@ class ClientControllerTest extends TestCase
         $newData = Client::factory()->makeOne()->toArray();
 
         $response = $this->actingAs($user)->patch(route('clients.update', $client->id), $newData);
+        $client->refresh();
 
         $response->assertRedirect(route('clients.show', $client->id));
         $response->assertSessionHas('msg', 'Dados atualizados com sucesso!');
-        $client->refresh();
         $this->assertEquals($newData['name'], $client->name);
         $this->assertEquals($newData['email'], $client->email);
     }
@@ -139,9 +139,9 @@ class ClientControllerTest extends TestCase
         $response = $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
             'uninvested_value' => 50.30,
         ]);
+        $client->refresh();
 
         $response->assertStatus(302)->assertSessionHas('msg', 'Valor depositado com sucesso!');
-        $client->refresh();
         $this->assertEquals(50.30, $client->uninvested_value);
     }
 
@@ -155,8 +155,8 @@ class ClientControllerTest extends TestCase
         $this->actingAs($user)->patch(route('clients.deposit', $client->id), [
             'uninvested_value' => 50.00,
         ]);
-
         $client->refresh();
+
         $this->assertEquals(150.00, $client->uninvested_value);
     }
 

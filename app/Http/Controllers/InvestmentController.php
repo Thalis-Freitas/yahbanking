@@ -10,56 +10,47 @@ class InvestmentController extends Controller
 {
     public function index()
     {
-        $investments = Investment::paginate(10);
+        $investments = Investment::latest()->paginate(14);
 
-        return view('home', compact('investments'));
+        return inertia('Home', compact('investments'));
     }
 
     public function create()
     {
-        return view('investments.create');
+        return inertia('Investments/CreateInvestment');
     }
 
     public function store(InvestmentStoreRequest $request)
     {
-        $input = $request->all();
+        $investment = Investment::create($request->validated());
 
-        $investment = Investment::create($input);
-
-        return redirect()->route('investments.show', $investment->id)
+        return redirect()->route('home')
             ->with('msg', 'Investimento cadastrado com sucesso!');
     }
 
-    public function show($id)
+    public function show(Investment $investment)
     {
-        $investment = Investment::find($id);
-
-        return view('investments.show', compact('investment'));
+        return inertia('Investments/ShowInvestment', compact('investment'));
     }
 
-    public function edit($id)
+    public function edit(Investment $investment)
     {
-        $investment = Investment::find($id);
-
-        return view('investments.edit', compact('investment'));
+        return inertia('Investments/EditInvestment', compact('investment'));
     }
 
-    public function update(InvestmentUpdateRequest $request, $id)
+    public function update(InvestmentUpdateRequest $request, Investment $investment)
     {
-        $input = $request->all();
-        $investment = Investment::find($id);
-        $investment->update($input);
+        $investment->update($request->validated());
 
-        return redirect()->route('investments.show', $id)
+        return redirect()->route('investments.show', $investment->id)
             ->with('msg', 'Dados atualizados com sucesso!');
     }
 
-    public function destroy($id)
+    public function destroy(Investment $investment)
     {
-        $investment = Investment::find($id);
+        $investment->deleteInvestment();
 
-        $investment->deleteInvestment($id);
-
-        return redirect('/')->with('msg', 'Investimento encerrado com sucesso!');
+        return redirect()->route('home')
+            ->with('msg', 'Investimento '.$investment->getAbbreviationUpper().' encerrado com sucesso!');
     }
 }

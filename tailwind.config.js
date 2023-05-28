@@ -2,11 +2,11 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: 'class',
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './resources/js/**/*.vue',
     ],
 
     theme: {
@@ -16,6 +16,13 @@ module.exports = {
             },
         },
     },
+
+    safelist: [
+        {
+            pattern: /bg-(amber|cyan|green|emerald)-(500|700|900)/,
+            variants: ['hover'],
+        },
+    ],
 
     plugins: [require('@tailwindcss/forms')],
 };
