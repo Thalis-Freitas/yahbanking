@@ -1,5 +1,5 @@
 <script setup>
-import GenericMessage from './GenericMessage.vue';
+import GenericMessage from '@/Components/Messages/GenericMessage.vue';
 
 </script>
 

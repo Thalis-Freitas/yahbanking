@@ -18,7 +18,7 @@ const props = defineProps({
     <div v-else>
         <img
             class="w-16"
-            alt="{{ client.name . 'avatar' }}"
+            :alt="`${client.name} avatar`"
             src="/img/avatardefault.svg"
         >
     </div>

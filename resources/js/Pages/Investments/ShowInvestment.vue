@@ -44,18 +44,15 @@ const headerTitleValue = () => {
                 v-if="$page.props.flash.msg"
                 :message="$page.props.flash.msg"
             />
-            <TopListItem
-                key-name="Sigla"
-                :value="abbreviationToUpper"
-            />
-            <ListItem
-                key-name="Nome Comercial"
-                :value="investment.name"
-            />
-            <BottomListItem
-                key-name="Descrição"
-                :value="investment.description"
-            />
+            <TopListItem>
+                Sigla: <span class="font-medium">{{ abbreviationToUpper }} </span>
+            </TopListItem>
+            <ListItem>
+                Nome Comercial: <span class="font-medium">{{ investment.name }} </span>
+            </ListItem>
+            <BottomListItem>
+                Descrição: <span class="font-medium">{{ investment.description }} </span>
+            </BottomListItem>
             <div class="mt-8 flex gap-2">
                 <GenericButton
                     :href="route('investments.edit', investment.id)"

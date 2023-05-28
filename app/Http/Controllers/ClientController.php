@@ -43,9 +43,10 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
+        $client->avatar = $client->getAvatarUrl();
         $investments = $client->getInvestmentsNotLinked();
 
-        return view('clients.show', compact('client', 'investments'));
+        return inertia('Clients/ShowClient', compact('client', 'investments'));
     }
 
     public function edit(Client $client)

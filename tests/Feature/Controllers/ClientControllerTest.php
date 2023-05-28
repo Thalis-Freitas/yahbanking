@@ -15,7 +15,7 @@ class ClientControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_index_method_returns_page_with_paginated_clients()
+    public function test_index_method_returns_page_with_clients()
     {
         $user = User::factory()->create();
         Client::factory()->count(15)->create();
@@ -30,7 +30,7 @@ class ClientControllerTest extends TestCase
         );
     }
 
-    public function test_create_method_returns_view()
+    public function test_create_method_returns_page()
     {
         $user = User::factory()->create();
 
@@ -61,23 +61,22 @@ class ClientControllerTest extends TestCase
         Storage::disk('public')->assertExists($client->avatar);
     }
 
-    public function test_show_method_returns_view_with_client_data()
+    public function test_show_method_returns_page_with_client_data()
     {
         $user = User::factory()->create();
         $client = Client::factory()->create();
 
         $response = $this->actingAs($user)->get(route('clients.show', $client->id));
 
-        $response->assertViewIs('clients.show');
-        $response->assertViewHas('client');
         $response->assertOk();
-        $response->assertSeeText([
-            'Informações sobre:',
-            $client->getFullName(),
-        ]);
+        $response->assertInertia(
+            fn (Assert $page) => $page
+            ->component('Clients/ShowClient')
+                ->has('client')
+        );
     }
 
-    public function test_edit_method_returns_view_with_client_data()
+    public function test_edit_method_returns_page_with_client_data()
     {
         $user = User::factory()->create();
         $client = Client::factory()->create();

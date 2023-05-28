@@ -19,7 +19,6 @@ const props = defineProps({
 
 <template>
     <Head title="Clientes" />
-
     <AuthenticatedLayout>
         <template #header>
             <HeaderTitle title="Clientes" />
@@ -28,7 +27,6 @@ const props = defineProps({
                 value="Novo Cliente"
             />
         </template>
-
         <PaginatedContainer
             v-if="clients.data.length > 0"
             :links="clients.links"

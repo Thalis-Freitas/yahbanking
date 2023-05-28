@@ -1,8 +1,10 @@
 <script setup>
-import ListItem from './ListItem.vue';
+import ListItem from '@/Components/ListItems/ListItem.vue';
 
 </script>
 
 <template>
-    <ListItem rounded-option="rounded-t-lg" />
+    <ListItem rounded-option="rounded-t-lg">
+        <slot />
+    </ListItem>
 </template>

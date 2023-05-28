@@ -12,7 +12,7 @@ class InvestmentControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_index_method_returns_home_page_with_paginated_investments()
+    public function test_index_method_returns_page_with_investments()
     {
         $user = User::factory()->create();
         Investment::factory()->count(15)->create();
